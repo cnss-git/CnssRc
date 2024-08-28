@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"   
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"      
+	xmlns:pe="http://primefaces.org/ui/extensions"
+> 
+    <h:body>
+ 
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    	
+    		
+    		<ui:define name="pageTitle">#{labels.edition} - #{labels.maj_carriere}</ui:define>
+    		
+    	
+    		<ui:define name="content">
+    			
+    		
+    			<h:form id="frm-report-params">
+    			
+    				<p:outputPanel>
+
+						<p:panelGrid style="margin: 0 auto;">
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{labels.from}" for="dt_deb"/>
+								</p:column>
+								<p:column>
+									<p:calendar 
+										id="dt_deb"
+										value="#{reportListDgDatdebDatFinController.dtDeb}"
+										required="true" 
+										label="#{labels.from}"
+										locale="ar"
+										pattern="dd-MM-yyyy"
+									/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{labels.to}" for="dt_fin"/>
+								</p:column>
+								<p:column>
+									<p:calendar 
+										id="dt_fin"
+										value="#{reportListDgDatdebDatFinController.dtFin}"
+										required="true"
+										label="#{labels.to}"
+										locale="ar"
+										pattern="dd-MM-yyyy"
+									/>
+								</p:column>
+							</p:row>
+							<p:row style="text-align:center;">
+								<p:column colspan="2">
+									<!-- 
+									<h:commandLink  
+										value="#{labels.edition}" 
+										actionListener="#{reportListDgDatdebDatFinController.edit}" 
+										styleClass="ui-button ui-widget ui-state-default ui-corner-all" 
+										style="padding:5px;"			
+									>
+										<span class="pi pi-print"></span><span class="ui-button-text ui-c"></span>
+									</h:commandLink>
+									-->
+									
+									<p:commandButton 
+										value="#{labels.edition}"
+										icon="pi pi-print"
+									>
+										<p:ajax listener="#{reportListDgDatdebDatFinController.edit}" process="dt_deb, dt_fin, @this" update="reportDialog,msgs"/>
+									</p:commandButton>
+									
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						
+						<p:dialog id="reportDialog" widgetVar="wReportDialog" width="800" height="800" resizable="false">
+						<pe:documentViewer  url="#{reportListDgDatdebDatFinController.reportPdfFileUrl}" height="760" width="760" zoom="page-width"/>
+						</p:dialog>
+						
+					</p:outputPanel>
+
+				</h:form>
+	    		
+	    	</ui:define> 
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

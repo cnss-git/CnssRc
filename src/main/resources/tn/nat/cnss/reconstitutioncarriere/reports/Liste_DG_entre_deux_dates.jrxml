@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Liste_DG_entre_deux_dates" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9eb3c73-a0c7-478c-ae77-f93d11389ec0">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="reconstitution cde carriere"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="726"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="260"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="315"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="678"/>
+	<parameter name="Date_Deb_Param" class="java.sql.Date"/>
+	<parameter name="Date_Fin_Param" class="java.sql.Date"/>
+	<queryString language="SQL">
+		<![CDATA[select r.ass_mat, r.ass_cle, b.ben_nom, b.ben_prenom, 
+r.rcdg_trim, r.rcdg_annee, t.libelle_fr, r.rcdg_type_operation, o.objet_libelle_fr, r.rcdg_dt_saisie
+from rc_dg r, beneficiaire b, type_salaire t, rc_demande_dg d, rc_demande_dg_objet o
+where r.ass_mat=b.ass_mat and r.ass_cle=b.ass_cle and b.ben_type=1 
+and r.code_type_salaire=t.code_type_salaire
+and r.demande_id=d.demande_id and d.objet_code=o.objet_code
+and r.rcdg_type_operation is not null
+and trunc(r.rcdg_dt_saisie) BETWEEN trunc($P{Date_Deb_Param}) and  trunc($P{Date_Fin_Param})]]>
+	</queryString>
+	<field name="ASS_MAT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ASS_MAT"/>
+		<property name="com.jaspersoft.studio.field.label" value="ASS_MAT"/>
+	</field>
+	<field name="ASS_CLE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ASS_CLE"/>
+		<property name="com.jaspersoft.studio.field.label" value="ASS_CLE"/>
+	</field>
+	<field name="BEN_NOM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BEN_NOM"/>
+		<property name="com.jaspersoft.studio.field.label" value="BEN_NOM"/>
+	</field>
+	<field name="BEN_PRENOM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BEN_PRENOM"/>
+		<property name="com.jaspersoft.studio.field.label" value="BEN_PRENOM"/>
+	</field>
+	<field name="RCDG_TRIM" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="RCDG_TRIM"/>
+		<property name="com.jaspersoft.studio.field.label" value="RCDG_TRIM"/>
+	</field>
+	<field name="RCDG_ANNEE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="RCDG_ANNEE"/>
+		<property name="com.jaspersoft.studio.field.label" value="RCDG_ANNEE"/>
+	</field>
+	<field name="LIBELLE_FR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LIBELLE_FR"/>
+		<property name="com.jaspersoft.studio.field.label" value="LIBELLE_FR"/>
+	</field>
+	<field name="RCDG_TYPE_OPERATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RCDG_TYPE_OPERATION"/>
+		<property name="com.jaspersoft.studio.field.label" value="RCDG_TYPE_OPERATION"/>
+	</field>
+	<field name="OBJET_LIBELLE_FR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OBJET_LIBELLE_FR"/>
+		<property name="com.jaspersoft.studio.field.label" value="OBJET_LIBELLE_FR"/>
+	</field>
+	<field name="RCDG_DT_SAISIE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="RCDG_DT_SAISIE"/>
+		<property name="com.jaspersoft.studio.field.label" value="RCDG_DT_SAISIE"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="90" y="45" width="360" height="30" uuid="badf62ef-476b-4240-8120-ccb732e38130"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liste des mouvements de mise à jour des carrières]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="35" y="10" width="100" height="30" uuid="dc512018-6e0d-42ae-b245-b1989b84b13b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="31" width="60" height="30" uuid="71e7ebc6-9425-4611-8d54-bfe821a61a69">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40e9337d-707a-467f-9d22-e9dce60e9774"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="31" width="40" height="30" uuid="83e87f36-c675-4da0-b2ea-04e5f853ff91">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab4bdab0-d9eb-4dc3-8900-ee45d6f8717e"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="31" width="55" height="30" uuid="6528f37c-f833-4f75-81a8-d73847fab823">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5dccd3c4-9a35-4f9c-8b1a-dbd24c83dc7d"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="31" width="64" height="30" uuid="42949bf1-70fd-4591-ae83-1ab45b0421d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de08f6b3-8da0-4fee-8418-ae11feab3dfe"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prenom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="31" width="55" height="30" uuid="c2fc32c8-f2dd-4f9f-97aa-77b59d3ae9ab">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a29e4eea-7682-4bbe-8864-9c9f204ae47f"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="31" width="44" height="30" uuid="836f3fb9-c480-45f0-b36b-6aaed009abf6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43c07ac0-45d0-4473-bdd2-0bc428398500"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Annee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="31" width="55" height="30" uuid="37f82931-9a49-4591-8401-1ced01a68138">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="398b535d-18f4-44e9-b5c7-cda53934e821"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="31" width="55" height="30" uuid="4a7f780f-cd3d-4aa3-bfcd-e1b80e2629f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7537e113-8837-4817-839e-07cf803eb606"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="31" width="55" height="30" uuid="4fc08dec-553c-4d5c-b637-05177e6f3cbf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21e79cca-71ae-4cf5-b4b2-d7c60fd5908e"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Objet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="31" width="55" height="30" uuid="654b3b10-85b7-4cbb-875a-41cecad05387">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32abba5c-00f4-434b-ac7f-3be5af1d6fc1"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[D_saisie]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="60" height="30" uuid="237845fc-aef6-4f3f-942f-82b1e551c8a5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40e9337d-707a-467f-9d22-e9dce60e9774"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASS_MAT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="0" width="40" height="30" uuid="11c934c1-87b9-4a79-9420-a3a9e0a94b5c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab4bdab0-d9eb-4dc3-8900-ee45d6f8717e"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASS_CLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="0" width="55" height="30" uuid="58983d61-f17f-493a-bb33-26f756115aa9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5dccd3c4-9a35-4f9c-8b1a-dbd24c83dc7d"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{BEN_NOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="0" width="64" height="30" uuid="d487095b-4511-4f04-918d-c1d2c76306f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de08f6b3-8da0-4fee-8418-ae11feab3dfe"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{BEN_PRENOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="55" height="30" uuid="411fe975-3a60-4352-8c7e-a29f4a45d50c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a29e4eea-7682-4bbe-8864-9c9f204ae47f"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RCDG_TRIM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="44" height="30" uuid="b12bc4c8-b967-4b9a-9a84-aa4766a0a710">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43c07ac0-45d0-4473-bdd2-0bc428398500"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RCDG_ANNEE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="0" width="55" height="30" uuid="a45a468f-739b-4d94-a00f-6a2a7fe308b0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="398b535d-18f4-44e9-b5c7-cda53934e821"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LIBELLE_FR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="55" height="30" uuid="7582e575-32b8-4142-88be-00500eadac75">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7537e113-8837-4817-839e-07cf803eb606"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RCDG_TYPE_OPERATION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="0" width="55" height="30" uuid="361c5222-8238-4665-99aa-12403d861508">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21e79cca-71ae-4cf5-b4b2-d7c60fd5908e"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{OBJET_LIBELLE_FR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="486" y="0" width="55" height="30" uuid="7ed9bae0-a171-4d8b-9430-e000efa5d975">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32abba5c-00f4-434b-ac7f-3be5af1d6fc1"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{RCDG_DT_SAISIE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="62" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="230" y="25" width="100" height="30" uuid="28cdaf0b-d46c-41a4-bc91-bd66beeee309"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

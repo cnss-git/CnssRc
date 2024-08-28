@@ -1,0 +1,54 @@
+<Configuration monitorInterval="60">
+
+    <Properties>
+        <Property name="log-file-path">"${sys:catalina.base}/logs/reconstitution-carriere"</Property>
+    </Properties>
+    
+    
+    <Appenders>
+        <Console name="Console-Appender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>>
+            </PatternLayout>
+        </Console>
+        
+        <RollingFile name="File-Appender" 
+		  fileName="${sys:catalina.base}/logs/reconstitution-carriere/reconstitution-carriere.log"
+		  filePattern="${sys:catalina.base}/logs/reconstitution-carriere/reconstitution-carriere.%d{MM-dd-yyyy}.log"
+		  ignoreExceptions="false">
+		    <PatternLayout>
+		        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Pattern>
+		    </PatternLayout>
+		    <TimeBasedTriggeringPolicy />
+		</RollingFile>
+    </Appenders>
+    
+    
+    <Loggers>
+        <!-- Hibernate before 5.4.5 -->
+        <!-- Pour tracer les requêtes SQL -->
+        <Logger name="org.hibernate.SQL" level="debug" additivity="false">
+            <AppenderRef ref="Console-Appender"/>
+            <AppenderRef ref="File-Appender"/>
+        </Logger>
+        <!--%Pour tracer les requêtes SQL%-->
+        
+        <!-- Pour les traces applicatifs info et + (warn,error,fatal) -->
+        <Logger name="tn.nat.cnss.reconstitutioncarriere" level="info" additivity="false">
+        	<AppenderRef ref="Console-Appender"/>
+            <AppenderRef ref="File-Appender"/>
+        </Logger>
+        <!--%Pour les traces applicatifs info et + (warn,error,fatal)%-->
+ 
+ 		<!-- Configuration par défaut (Loggers non configurés manuellement --> 
+ 		<!-- dans ce cas autres que org.hibernate.SQL et tn.nat.cnss.reconstitutioncarriere -->
+        <Root level="warn">
+            <AppenderRef ref="Console-Appender"/>
+            <AppenderRef ref="File-Appender"/>
+        </Root>
+        <!--%Configuration par défaut (Loggers non configurés manuellement%--> 
+ 		<!--%dans ce cas autres que org.hibernate.SQL et tn.nat.cnss.reconstitutioncarriere%-->
+    </Loggers>
+</Configuration>

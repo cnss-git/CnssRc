@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    		
+    		<ui:define name="pageTitle">#{labels.transfert} #{labels['assure.matricule']}</ui:define> 
+    		
+    		
+    	
+    		<ui:define name="content">
+    		
+	    		<h:form id="frm-transfert-matricule">
+	    		
+	    			<h3 class="panelTitle" style="margin-top: 50px;">#{labels.assure}</h3>
+	    			
+	    			
+	    			<!-- Matricule Source --> 
+    				<p:panelGrid style="margin: 0 auto;margin-top:25px;">
+    					<p:row>
+	    					<p:column colspan="12" style="text-align:center;">
+			    				<p:outputLabel value="#{labels.transfert} #{labels.from}" for="ass_mat_source" style="color:#459e00; font-weight:bold; font-size:17px;"/>
+			    			</p:column>
+    					</p:row>
+    					
+    					
+	    				<p:row>
+	    					<p:column>
+			    				<p:outputLabel value="#{labels['assure.matricule']}" for="ass_mat_source" />
+			    			</p:column>
+			    			
+			    			<p:column>
+			    				<p:inputNumber value="#{rcTransfertMatriculeController.assMatSource}" id="ass_mat_source" label="#{labels['assure.matricule']}" size="6" decimalPlaces="0" thousandSeparator="" maxValue="99999999">
+			    					<p:ajax 
+			    						listener="#{rcTransfertMatriculeController.refreshAssureSource()}" 
+			    						process="ass_mat_source,ass_cle_source" 
+			    						update="ass_identite_source_ar, ass_identite_source_fr, ass_dtnais_source, ass_dteffet_source, ass_iu_source, ass_regime_source, dt-carriere-source, btn-transfert, btn-annuler, msgs"
+			    						oncomplete="if(args.validationFailed) {PF('wBtnTransfert').disable()}"
+		    						/>
+			    				</p:inputNumber>
+			    				<p:outputLabel value="-" style="margin:0 2px"/>
+			    				<p:inputNumber value="#{rcTransfertMatriculeController.assCleSource}" id="ass_cle_source" size="1" decimalPlaces="0" thousandSeparator="" maxValue="9">
+			    					<p:ajax 
+			    						listener="#{rcTransfertMatriculeController.refreshAssureSource()}" 
+			    						process="ass_mat_source,ass_cle_source" 
+			    						update="ass_identite_source_ar, ass_identite_source_fr, ass_dtnais_source, ass_dteffet_source, ass_iu_source, ass_regime_source, dt-carriere-source, btn-transfert, btn-annuler, msgs"
+			    						oncomplete="if(args.validationFailed) {PF('wBtnTransfert').disable()}"
+		    						/>
+			    				</p:inputNumber>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels['assure.identite']}" />
+		    				</p:column>		    				
+		    				<p:column colspan="2">
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureSource.identiteAr}" id="ass_identite_source_ar" disabled="true" size="50"/>
+		    				</p:column>	    				
+		    				<p:column colspan="2">
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureSource.identiteFr}" id="ass_identite_source_fr" disabled="true" size="50" dir="ltr"/>
+		    				</p:column>
+	    				</p:row>
+	    				
+	    				
+	    				<p:row>
+	    					<p:column>
+		    					<p:outputLabel value="#{labels.date_naissance}" />
+		    				</p:column>		    				
+		    				<p:column>
+			    				<p:inputText value="#{rcTransfertMatriculeController.assureSource.benDtnais}" id="ass_dtnais_source" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.date_effet}" />
+		    				</p:column>		    				
+		    				<p:column>
+			    				<p:inputText value="#{rcTransfertMatriculeController.assureSource.assDteff}" id="ass_dteffet_source" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column style="text-align:end;">
+		    					<p:outputLabel value="#{labels.identifiant_unique}" style="margin-left:10px;"/>
+		    					<!-- 
+		    				</p:column>
+		    				<p:column>
+		    				-->
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureSource.iu}" id="ass_iu_source" disabled="true" size="8" style="color:red; font-weight:bold;"/>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.a}#{labels.regime}" style="margin-left: 10px;"/>
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureSource.regCod}" id="ass_regime_source" disabled="true" size="2"/>
+		    				</p:column>
+	    				</p:row>
+   					</p:panelGrid>
+    				<!--%Matricule Source%--> 
+    				
+    				
+    				
+    				
+    				
+    				<!-- Matricule Destination --> 
+    				<p:panelGrid style="margin: 0 auto;margin-top:25px;">
+    					<p:row>
+	    					<p:column colspan="12" style="text-align:center;">
+			    				<p:outputLabel value="#{labels.to}" for="ass_mat_source" style="color:#459e00; font-weight:bold; font-size:17px;"/>
+			    			</p:column>
+    					</p:row>
+    					
+    					
+	    				<p:row>
+	    					<p:column>
+			    				<p:outputLabel value="#{labels['assure.matricule']}" for="ass_mat_source" />
+			    			</p:column>
+			    			
+			    			<p:column>
+			    				<p:inputNumber value="#{rcTransfertMatriculeController.assMatDestination}" id="ass_mat_destination" label="#{labels['assure.matricule']}" size="6" decimalPlaces="0" thousandSeparator="" maxValue="99999999">
+			    					<p:ajax 
+			    						listener="#{rcTransfertMatriculeController.refreshAssureDestination()}" 
+			    						process="ass_mat_destination, ass_cle_destination" 
+			    						update="ass_identite_fr_destination, ass_identite_ar_destination, ass_dtnais_destination, ass_dteffet_destination, ass_iu_destination, ass_regime_destination, dt-carriere-source, btn-transfert, btn-annuler, msgs"
+			    						oncomplete="if(args.validationFailed) {PF('wBtnTransfert').disable()}"
+		    						/>
+			    				</p:inputNumber>
+			    				<p:outputLabel value="-" style="margin:0 2px"/>
+			    				<p:inputNumber value="#{rcTransfertMatriculeController.assCleDestination}" id="ass_cle_destination" size="1" decimalPlaces="0" thousandSeparator="" maxValue="9" >
+			    					<p:ajax 
+			    						event="blur" 
+			    						listener="#{rcTransfertMatriculeController.refreshAssureDestination()}" 
+			    						process="ass_mat_destination, ass_cle_destination" 
+			    						update="ass_identite_fr_destination, ass_identite_ar_destination, ass_dtnais_destination, ass_dteffet_destination, ass_iu_destination, ass_regime_destination, dt-carriere-source, btn-transfert, btn-annuler, msgs"
+			    						oncomplete="if(args.validationFailed) {PF('wBtnTransfert').disable()}"
+		    						/>
+			    				</p:inputNumber>
+		    				</p:column>
+		    				
+		    				<p:column >
+		    					<p:outputLabel value="#{labels['assure.identite']}" />
+		    				</p:column>		    				
+		    				<p:column colspan="2">
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureDestination.identiteAr}" id="ass_identite_fr_destination" disabled="true" size="50"/>
+		    				</p:column>	    				
+		    				<p:column colspan="2">
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureDestination.identiteFr}" id="ass_identite_ar_destination" disabled="true" size="50" dir="ltr"/>
+		    				</p:column>
+	    				</p:row>
+	    				
+	    				
+	    				
+	    				<p:row>
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.date_naissance}" />
+		    				</p:column>		    				
+		    				<p:column>
+			    				<p:inputText value="#{rcTransfertMatriculeController.assureDestination.benDtnais}" id="ass_dtnais_destination" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.date_effet}" />
+		    				</p:column>		    				
+		    				<p:column>
+			    				<p:inputText value="#{rcTransfertMatriculeController.assureDestination.assDteff}" id="ass_dteffet_destination" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column style="text-align:end;">
+		    					<p:outputLabel value="#{labels.identifiant_unique}" style="margin-left: 10px;"/>
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureDestination.iu}" id="ass_iu_destination" disabled="true" size="8" style="color:red; font-weight:bold;"/>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.a}#{labels.regime}" style="margin-left: 10px;"/>		    				
+		    					<p:inputText value="#{rcTransfertMatriculeController.assureDestination.regCod}" id="ass_regime_destination" disabled="true" size="2"/>
+		    				</p:column>
+	    				</p:row>
+	    			</p:panelGrid>
+	    			<!--%Matricule Destination%--> 
+	    			
+	    			
+	    			
+	    			
+	    			
+	    			<!-- Carrière Matricule Source -->
+	    			<p:panel>
+		    			<p:dataTable
+		    				id="dt-carriere-source"
+		    				value="#{rcTransfertMatriculeController.carriereAssureSource}"
+		    				var="salaire"
+		    				rows="10"
+		                 	paginator="true"
+		                 	paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                 	currentPageReportTemplate="{startRecord} - {endRecord} #{labels.from} {totalRecords}" 
+		                 	rowsPerPageTemplate="10,20,30"
+		                 	dir="rtl"
+		                 	emptyMessage="#{messages.noRecordsFound}"
+		    				style="margin-top:25px;"
+		    			>
+		    			
+		    				<p:column headerText="#{labels.a}#{labels.trimestre}">
+		    					<p:outputLabel value="#{salaire.id.trimestre} - #{salaire.id.annee}" />
+		    				</p:column>
+		    				
+		    				<p:column headerText="#{labels.a}#{labels.employeur}">
+		    					<p:outputLabel value="#{salaire.empMat} - #{salaire.empCle}" />
+		    				</p:column>
+		    			
+		    				<p:column headerText="#{labels.a}#{labels['ds.salaire']}">
+		    					<p:outputLabel value="#{salaire.salaire}" >
+		    						<f:convertNumber groupingUsed="true"  maxFractionDigits="0"/>
+		    					</p:outputLabel>
+		    				</p:column>
+		    				
+		    				<p:column headerText="#{labels['ds.type_salaire']}">
+		    					<p:selectOneMenu value="#{salaire.id.typeSalaire}" disabled="true" editable="false" >
+		    						<f:selectItems 
+		    							value="#{rcDgController.listTypesSalaire}" 
+		    							var="typeSalaire"
+		    							itemLabel="#{typeSalaire.libelleAr != null ? typeSalaire.libelleAr : typeSalaire.libelleFr}"
+		    							itemValue="#{typeSalaire.codeTypeSalaire}"
+	    							/>
+		    					</p:selectOneMenu>
+		    				</p:column>
+		    			
+		    			</p:dataTable>
+	    			</p:panel>
+	    			<!--%Carrière Matricule Source%-->
+	    			
+	    			
+	    			
+	    			<p:panel style="text-align:center;">
+	    				<p:commandButton 
+	    					id="btn-transfert"
+	    					value="#{labels.transfert}" 
+	    					icon="pi pi-refresh" 
+	    					disabled="#{rcTransfertMatriculeController.assureSource==null || rcTransfertMatriculeController.assureDestination==null || rcTransfertMatriculeController.carriereAssureSource==null || rcTransfertMatriculeController.transfert != null}"
+	    					widgetVar="wBtnTransfert"
+    					>
+    						<p:ajax 
+    							event="click" 
+    							listener="#{rcTransfertMatriculeController.processTransfertMatricule()}" 
+    							update="btn-transfert, btn-annuler, msgs"
+    							oncomplete="if(!args.validationFailed) {PF('wBtnTransfert').disable();$('#frm-transfert-matricule\\:ass_cle_destination_input').trigger('blur')}"
+   							/>
+    					</p:commandButton>
+	    			
+	    				<p:commandButton 
+	    					id="btn-annuler"
+	    					value="#{labels.cancel}" 
+	    					icon="pi pi-replay" 
+	    					disabled="#{rcTransfertMatriculeController.assureSource==null || rcTransfertMatriculeController.assureDestination==null || rcTransfertMatriculeController.carriereAssureSource==null || rcTransfertMatriculeController.transfert == null || rcTransfertMatriculeController.transfert.dateExploitation != null}"
+	    					widgetVar="wBtnAnnuler"
+    					>
+    						<p:ajax 
+    							event="click" 
+    							listener="#{rcTransfertMatriculeController.processCancelTransfertMatricule()}" 
+    							update="btn-transfert, btn-annuler, msgs"
+    							oncomplete="if(!args.validationFailed) {PF('wBtnTransfert').disable();$('#frm-transfert-matricule\\:ass_cle_destination_input').trigger('blur')}"
+   							/>
+    					</p:commandButton>
+	    			</p:panel>
+	    			
+	    			
+	    		
+	    		</h:form>
+    		
+    		</ui:define>
+    		
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

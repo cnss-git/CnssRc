@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+   			<div id="p-state-panel-">
+    			<!-- <p:outputLabel id="connected-user" styleClass="bleu">#{utilsBean.usrLogin}  #{utilsBean.usrProfile}</p:outputLabel> -->
+    			<div style="display: inline-block;">
+	    			<p:outputLabel id="connected-user-login" styleClass="green" style="margin-left: 5px;/*float:right;*/">#{sessionBean.userMatricule} : </p:outputLabel>
+	    			<p:outputLabel id="connected-user-name" styleClass="green" style="/*float:right*/;margin-left:30px;">#{sessionBean.userName} </p:outputLabel>
+	    			<p:outputLabel value="#{labels.structure_affectation} : #{sessionBean.userBelongsTo.burIntitAr}" styleClass="green"  style="margin-left: 70px;"/>
+	    			<p:outputLabel value="#{labels.structure_connexion} : #{sessionBean.userConnectedFrom.burIntitAr}" styleClass="green"  style="margin-left: 70px;"/>
+	    			<p:outputLabel value="#{labels.structure_session} : #{sessionBean.userConnectedAs.burIntitAr}" styleClass="green"  />
+    			
+    			
+    			
+    			
+	    			<p:commandButton rendered="#{sessionBean.userBelongsTo.burCod == 88}" value="#{labels.edit}" style="margin-right:15px;" icon="pi pi-refresh">
+	    				<p:ajax event="click" onstart="PF('brDialog').show()" />
+	    			</p:commandButton>
+	    			
+	    			<h:form >
+	    			<p:dialog widgetVar="brDialog" modal="true" draggable="false" closable="false" resizable="false" header="#{labels.structure_session} :">
+	    				<p:panelGrid>
+		    				<p:row>
+		    					<p:column>
+					        		<p:inputNumber id="new-structure" decimalPlaces="0" value="#{sessionBean.structureToSwitchTo}"/>
+					        	</p:column>
+					        </p:row>
+					        <p:row>
+					        	<p:column style="text-align:center;">
+							        <p:commandButton value="#{messages.confirm}" action="#{sessionBean.switchStructure()}" ajax="false">
+							        </p:commandButton>
+						        </p:column>
+					        </p:row>
+				        </p:panelGrid>
+				    </p:dialog>
+				    </h:form>
+				    
+				</div>
+    			
+    			
+    			<p:link rendered="#{sessionBean.mode.compareTo('prod')==0}" href="${request.contextPath}/perform_logout" id="logout_prod" styleClass="green logout" style="float:left;">#{labels.logout}</p:link>
+    			
+    			
+    			<p:link rendered="#{sessionBean.mode.compareTo('dev')==0}" href="${request.contextPath}/perform_logout" id="logout_dev" styleClass="green logout" style="float:left;">#{labels.logout}</p:link> 
+   			</div>
+	    </ui:composition>
+    </body>
+</html>

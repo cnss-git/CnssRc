@@ -1,0 +1,1 @@
+<jsp:forward page="pages/welcome.xhtml"></jsp:forward>

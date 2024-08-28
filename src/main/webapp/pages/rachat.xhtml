@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+ 
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    	
+    		
+    		
+    		<ui:define name="pageTitle">#{labels.rachat}</ui:define> 
+    		
+    	
+    		<ui:define name="content">
+    			
+    			
+    		
+    			<h:form id="frm-rachat">
+    				<p:focus context="ass_mat"/>
+    				
+    				<h3 class="panelTitle" style="margin-top: 50px;">#{labels.assure} (#{labels.tns})</h3>  
+    				<p:panelGrid style="margin:0 auto;margin-top:25px;">
+
+	    				<p:row>
+	    					<p:column>
+			    				<p:outputLabel value="#{labels['assure.matricule']}" for="ass_mat" />
+			    			</p:column>
+			    			
+			    			<p:column>
+			    				<p:inputNumber value="#{rcRachatController.assMat}" id="ass_mat" label="#{labels['assure.matricule']}" size="6" decimalPlaces="0" thousandSeparator="" maxValue="99999999">
+			    					<p:ajax 
+			    						listener="#{rcRachatController.refreshAssure()}" 
+			    						process="ass_mat,ass_cle" 
+			    						update="ass_identite_ar, ass_identite_fr, ass_dtnais, ass_dteffet, ass_age, ass_regime, tns_categorie, p_rachat, msgs"
+		    						/>
+			    				</p:inputNumber>
+			    				<p:outputLabel value="-" style="margin:0 2px"/>
+			    				<p:inputNumber value="#{rcRachatController.assCle}" id="ass_cle" size="1" decimalPlaces="0" thousandSeparator="" maxValue="9"  >
+			    					<p:ajax 
+			    						listener="#{rcRachatController.refreshAssure()}" 
+			    						process="ass_mat,ass_cle" 
+			    						update="ass_identite_ar, ass_identite_fr, ass_dtnais, ass_dteffet, ass_dtassuj, ass_age, ass_regime, tns_categorie, p_rachat, msgs"
+			    						oncomplete="dateDemendeFocus();"			    						
+		    						/>
+			    				</p:inputNumber>
+		    				</p:column>
+		    				
+		    				<script>
+		    					function dateDemendeFocus(){
+		    						setTimeout(function(){ $('#frm-rachat\\:date_demande_input').focus(); }, 100);
+		    					};
+		    				</script>
+		    				
+		    				<!-- setTimeout(function(){ $('#frm-rachat\\:date_demande_input'). focus (); }, 500); -->
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels['assure.identite']}" />
+		    				</p:column>		    				
+		    				<p:column colspan="3">
+		    					<p:inputText value="#{rcRachatController.assure.identiteAr}" id="ass_identite_ar" disabled="true" size="50"/>
+		    				</p:column>		    				
+		    				<p:column colspan="2">
+		    					<p:inputText value="#{rcRachatController.assure.identiteFr}" id="ass_identite_fr" disabled="true" size="50" dir="ltr"/>
+		    				</p:column>
+	    				</p:row>
+
+   						<p:row>
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.date_naissance}" />
+		    				</p:column>		    				
+		    				<p:column>
+			    				<p:inputText value="#{rcRachatController.assure.benDtnais}" id="ass_dtnais" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.a}#{labels.age}" />
+		    				</p:column>
+		    				<p:column>
+		    					<p:inputText value="#{rcRachatController.assure.age}" id="ass_age" disabled="true" size="3"/>
+		    				</p:column>
+		    				
+		    				<p:column style="text-align:end;">
+		    					<p:outputLabel value="#{labels.date_effet}" style="margin-left:10px;"/>
+			    				<p:inputText value="#{rcRachatController.assure.assDteff}" id="ass_dteffet" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column style="text-align:end;">
+		    					<p:outputLabel value="#{labels.date_assujetissement}" style="margin-left:10px;"/>
+			    				<p:inputText value="#{rcRachatController.assure.assDtassuj}" id="ass_dtassuj" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.a}#{labels.regime}" style="margin-left:10px;"/>
+		    					<p:inputText value="#{rcRachatController.assure.regCod}" id="ass_regime" disabled="true" size="2"/>
+		    				</p:column>
+		    				
+		    				
+		    				
+		    				<p:column style="text-align:end;">
+		    					<p:outputLabel value="#{labels.categorie_tns}" style="margin-left:10px;"/>
+		    					<p:inputText value="#{rcRachatController.assure.categorieTns}" id="tns_categorie" disabled="true" size="2"/>
+		    				</p:column>
+		    				
+		    			</p:row>
+   						
+   					</p:panelGrid>
+   					
+   					
+   					
+   					
+   					
+   					
+   					
+   					<h3 class="panelTitle" style="margin-top: 50px;">#{labels.demande} #{labels.rachat}</h3> 
+   					<!-- visible="#{rcRachatController.assure != null}" -->
+   					
+   					<p:panel id="p_rachat" >
+	   					<p:panelGrid style="margin:0 auto;margin-top:25px;" >   					
+	   						
+	   						<p:row>
+	   						
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.date} #{labels.a}#{labels.depot}" for="date_demande"/>
+	   							</p:column>
+	   							<p:column>
+	   								<p:calendar 
+	   									id="date_demande"
+	   									value="#{rcRachatController.dateDemande}" 
+	   									label="#{labels.date} #{labels.a}#{labels.depot}" 
+	   									locale="ar" 
+	   									pattern="dd-MM-yyyy" 
+	   									mask="true" 
+	   									maxdate="today" 
+	   									size="7"
+	   									disabled="#{rcRachatController.assure == null || rcRachatController.ordrePaiemenentGenerated}"
+	   									required="true"	   									
+	  								>
+	  									<p:ajax 
+	  										event="dateSelect" 
+	  										listener="#{rcRachatController.refreshAgeDemande()}" 
+	  										process="date_demande" 
+	  										update="age_date_demande"
+  										/>
+	  									<p:ajax 
+	  										event="change" 
+	  										listener="#{rcRachatController.refreshAgeDemande()}" 
+	  										process="date_demande" 
+	  										update="age_date_demande, taux_rachat" 
+  										/>
+	  								</p:calendar>
+	   							</p:column>
+	  						</p:row>
+	  						
+	  						<p:row>
+	  							<p:column>
+	  								<p:outputLabel value="#{labels.age_a_la_date_demande}" />
+	  							</p:column>
+	  							<p:column>
+	  								<p:inputText id="age_date_demande" value="#{rcRachatController.ageDateDemande}" disabled="true" size="3"/>
+	  							</p:column>
+	  						</p:row>
+	   						
+	   						<p:row>
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.from} #{labels.a}#{labels.trimestre}" for="trimestre_debut"/>
+	   							</p:column>
+	   							
+	   							<p:column>	
+	   								<p:selectOneMenu
+	   									id="trimestre_debut" 
+					                	value="#{rcRachatController.trimestreDebut}"
+					                	label="#{labels.a}#{labels.trimestre}" 
+					                	style="margin-left:5px;"
+					                	required="true"					                	
+	   									disabled="#{rcRachatController.assure == null || rcRachatController.ordrePaiemenentGenerated}"
+				                	>
+			    						<f:selectItem itemLabel=" " noSelectionOption="true"/>
+			    						<f:selectItem itemLabel="1" itemValue="1"/>
+			    						<f:selectItem itemLabel="2" itemValue="2"/>
+			    						<f:selectItem itemLabel="3" itemValue="3"/>
+			    						<f:selectItem itemLabel="4" itemValue="4"/>
+			    						
+			    					</p:selectOneMenu>
+	   							
+						            <p:inputNumber  
+						            	id="annee_debut"
+					                	value="#{rcRachatController.anneeDebut}"
+					                	label="#{labels.annee}"
+				    					size="3" 
+				    					decimalPlaces="0" 
+				    					thousandSeparator="" 
+				    					maxValue="9999" 
+				    					style="margin-left:5px;" 
+	   									disabled="#{rcRachatController.assure == null || rcRachatController.ordrePaiemenentGenerated}"
+	   									required="true"
+				    				>
+				    				
+				    				</p:inputNumber>
+		    					</p:column>
+	   						</p:row>
+	   						
+	   						<p:row>
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.to} #{labels.a}#{labels.trimestre}" for="trimestre_fin"/>
+	   							</p:column>
+	   							
+	   							<p:column>	
+	   								<p:selectOneMenu 
+	   									id="trimestre_fin"
+					                	value="#{rcRachatController.trimestreFin}"
+					                	label="#{labels.a}#{labels.trimestre}" 
+					                	style="margin-left:5px;"
+	   									disabled="#{rcRachatController.assure == null || rcRachatController.ordrePaiemenentGenerated}"
+	   									required="true"
+				                	>
+			    						<f:selectItem itemLabel=" " noSelectionOption="true"/>
+			    						<f:selectItem itemLabel="1" itemValue="1"/>
+			    						<f:selectItem itemLabel="2" itemValue="2"/>
+			    						<f:selectItem itemLabel="3" itemValue="3"/>
+			    						<f:selectItem itemLabel="4" itemValue="4"/>
+			    					</p:selectOneMenu>
+	   							
+						            <p:inputNumber  
+						            	id="annee_fin"
+						            	value="#{rcRachatController.anneeFin}"
+					                	label="#{labels.annee}"
+				    					size="3" 
+				    					decimalPlaces="0" 
+				    					thousandSeparator="" 
+				    					maxValue="9999" 
+				    					style="margin-left:5px;" 
+	   									disabled="#{rcRachatController.assure == null || rcRachatController.ordrePaiemenentGenerated}"
+	   									required="true"
+				    				>
+				    				</p:inputNumber>
+		    					</p:column>
+	   						</p:row>
+	   						
+	   						
+	   						<p:row>
+	   							<p:column colspan="2" style="text-align:center;">
+	   								<p:commandButton value="#{labels.calcul}" disabled="#{rcRachatController.assure==null || rcRachatController.ordrePaiemenentGenerated}">
+	   									<p:ajax 
+	   										listener="#{rcRachatController.refreshRachatData}"  
+	   										oncomplete="console.log(args.validationFailed); if(!args.validationFailed) {PF('dlgEstimation').show();}"	   										
+	   										process="date_demande, trimestre_debut, annee_debut, trimestre_fin, annee_fin, @this "  
+				    						update="date_demande, trimestre_debut, annee_debut, trimestre_fin, annee_fin, dlg_estimation, msgs" 
+   										/>
+	   								</p:commandButton>
+	   							</p:column>
+	   						</p:row>
+	   						
+	   							   					
+	   					</p:panelGrid>
+					</p:panel>
+					
+					
+					
+					
+					
+					<p:dialog id="dlg_estimation" widgetVar="dlgEstimation" resizable="false">
+						<p:panelGrid>
+						
+							<p:row>
+								<p:column colspan="2">
+									<p:messages id="msg_dlg_estimation" showDetail="true"/>
+								</p:column>
+							</p:row>
+	   						
+	   						<p:row>
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.nombre_de_trimestres}" /> 
+	   							</p:column>
+	   							<p:column>
+	   								<p:inputText id="nombre_de_trimestres" value="#{rcRachatController.rachat.nombreDeTrimestres}" disabled="true" size="3"/>
+	   							</p:column>
+	   						</p:row>
+	   						
+	   						<p:row>
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.a}#{labels['ds.salaire']} #{labels.a}#{labels.trimestriel}" />   
+	   							</p:column>
+	   							<p:column>
+	   								<p:inputNumber 
+	   									id="salaire" 
+	   									value="#{rcRachatController.rachat.salaireTrim}" 
+	   									disabled="true" 
+	   									decimalPlaces="0"  
+							    	/>
+	   							</p:column>
+	   						</p:row>
+	   						
+	   						<p:row>
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.taux_rachat}" /> 
+	   							</p:column>
+	   							<p:column>
+	   								<p:inputText id="taux_rachat" value="#{rcRachatController.tauxRachat} %" size="2" disabled="true"/>
+	   							</p:column>
+	   						</p:row>
+	   						
+	   						<p:row>
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.cotisation_trimestriel}" />    
+	   							</p:column>
+	   							<p:column>
+	   								<p:inputNumber
+	   									id="cotisation_trimestriel" 
+	   									value="#{rcRachatController.rachat.cotisationTrimestriel}"
+	   									disabled="true" 
+	   									decimalPlaces="0" 
+   									/>
+	   							</p:column>
+	   						</p:row>
+	   						
+	   						<p:row>
+	   							<p:column>
+	   								<p:outputLabel value="#{labels.total_cotisation}" />  
+	   							</p:column>
+	   							<p:column>
+	   								<p:inputNumber
+	   									id="total_cotisation" 
+	   									value="#{rcRachatController.rachat.totalCotisationRachat}" 
+	   									disabled="true"	   									
+	   									decimalPlaces="0" 
+   									/>
+	   							</p:column>
+	   						</p:row>
+	   						
+	   					</p:panelGrid>
+	   					
+	   					<p:panel style="text-align:center;margin-top:10px;">
+	   						<p:commandButton value="#{labels.ordre_de_paiement}" >
+	   							<p:ajax listener="#{rcRachatController.generateRachatOrdrePaiement}" process="@this" update="msg_dlg_estimation, msgs, p_rachat"/>  
+	   						</p:commandButton>
+	   					</p:panel>
+
+	   						
+  					</p:dialog>
+					
+				
+				
+				</h:form>
+	    		
+	    	</ui:define> 
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

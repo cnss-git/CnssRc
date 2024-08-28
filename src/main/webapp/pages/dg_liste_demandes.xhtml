@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+ 
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    	
+    	
+    		
+    		<ui:define name="pageTitle">#{labels.liste} #{labels.a}#{labels.demandeS}</ui:define>  
+    		
+    		
+    	
+    		<ui:define name="content">
+    			
+    			<style>
+    				#frm-liste-demandes-dg\:panel-add-edit-demande-buttons_content{
+    					display: flex;
+    					justify-content: space-around;
+    				}
+    			</style>
+    			
+    		
+    			<h:form id="frm-liste-demandes-dg" onkeypress="if (event.keyCode == 13) { return false; }" >
+    				
+    				<!-- <h3 class="panelTitle" style="margin-top: 50px;">#{labels.liste} #{labels.a}#{labels.demandeS}</h3> -->
+		    			
+	    			
+	    			<!-- Panel boutons -->
+	    			<p:panel style="margin-bottom:50px;">
+	    				<p:commandButton value="#{labels.add}" icon="pi pi-plus">
+	    					<p:ajax 
+	    						event="click" 
+	    						listener="#{rcDgListeDemandesController.initAddEditDialog()}" 
+	    						oncomplete="PF('wAddEditDlgDemande').show();" 
+	    						process="@this"
+	    						update="dlg-add-edit-demande" 
+	    					/>
+	    				</p:commandButton>
+	    			</p:panel>
+	    			<!--%Panel boutons%-->
+	    			
+	    			
+	    			<!-- Filters -->
+	    			<p:panel style="margin:20px 0;" id="pFilters">
+    					<div style="text-align: center;">
+    						<p:outputLabel value="#{labels.assure}" style="margin-left:5px;"/>
+    						<p:inputNumber 
+    							value="#{rcDgListeDemandesController.filterAssMat}" 
+    							id="filter_ass_mat" 
+    							label="#{labels['assure.matricule']}" 
+    							size="7" 
+    							decimalPlaces="0" 
+    							thousandSeparator=""  
+    							maxValue="99999999"
+    						>
+    							<p:ajax
+    								listener="#{rcDgListeDemandesController.filterListDemandes()}"
+    								process="@this"
+    								update="dt-liste-demandes"  
+    							/>
+    						</p:inputNumber>
+    					</div>
+    				</p:panel>
+	    			<!--%Filters%-->
+	    			
+	    			
+	    			
+    				<!-- Liste des demandes -->
+    				<p:dataTable
+		    				id="dt-liste-demandes"
+		    				emptyMessage="#{messages.noRecordsFound}"
+		    				value="#{rcDgListeDemandesController.filteredListDemandes}"
+		    				var="demande"
+	    					widgetVar="dtListeDemandes"	    					
+	    					rows="10"
+		                 	paginator="true"
+		                 	paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                 	currentPageReportTemplate="{startRecord} - {endRecord} #{labels.from} {totalRecords}" 
+		                 	rowsPerPageTemplate="10,20,30"	                 	
+		    		>
+		    		
+		    			<p:column headerText="#{labels.objet} #{labels.a}#{labels.demande}" width="15%">
+		    				<p:outputLabel value="#{demande.objetLibelle}" />
+		    			</p:column>
+		    			
+		    			<p:column headerText="#{labels['assure.matricule']}" width="10%">
+		    				<p:outputLabel value="#{demande.assMat}" />-<p:outputLabel value="#{demande.assCle}" />
+		    			</p:column>
+		    			
+		    			<p:column headerText="#{labels.situation} #{labels.a}#{labels.demande}" width="35%"> 
+		    				<p:outputLabel value="#{demande.situationLibelle} " /> <p:outputLabel value=" #{labels.depuis} "/> <p:outputLabel value="#{demande.dateSituation}"></p:outputLabel> 
+		    			</p:column>
+		    			
+		    			<p:column width="40%"> 
+							<p:commandButton icon="pi pi-search" value="#{labels.details} #{labels.a}#{labels.situationS}"> 
+ 								<p:ajax
+ 									listener="#{rcDgListeDemandesController.historiqueDemande(demande)}"
+ 									process="@this"
+ 									update="frm-liste-demandes-dg:dlg-historique-demande"
+ 									oncomplete="PF('wDlgHistoriqueDemande').show();"
+ 								/>
+							</p:commandButton>
+		    				<p:button icon="pi pi-pencil" outcome="dg" value="#{labels.maj_carriere}" rendered="#{demande.situationCode==1 or demande.situationCode==2}">
+ 								<f:param name="demandeId" value="#{demande.id}" /> 
+ 								<f:param name="modeAcces" value="edit"/>
+							</p:button>
+		    				<p:button icon="pi pi-check" outcome="dg" value="#{labels.validate}" rendered="#{demande.situationCode==2}">
+ 								<f:param name="demandeId" value="#{demande.id}" /> 
+ 								<f:param name="modeAcces" value="validate"/>
+							</p:button>
+		    				<p:button icon="pi pi-arrow-circle-left" outcome="dg" value="#{labels.view}" rendered="#{demande.situationCode>1}">
+ 								<f:param name="demandeId" value="#{demande.id}" /> 
+ 								<f:param name="modeAcces" value="view"/>
+							</p:button>
+		    			</p:column>
+		    			
+		    		</p:dataTable>
+		    		<!--%Liste des demandes%-->
+		    		
+		    		
+		    		
+		    		
+		    		
+		    		
+		    		
+		    		<!-- Boite de dialogue nouvelle demande -->
+		    		<p:dialog
+		    			id="dlg-add-edit-demande"
+		    			widgetVar="wAddEditDlgDemande"
+		    			modal="true" 
+		    			closable="false" 
+		    			header="#{labels.add} #{labels.demande}"
+		    		>
+		    		
+		    			<p:outputPanel id="panel-add-edit-demande">
+		    			
+			    			<p:panelGrid>
+			    				<p:row>
+			    					<p:column colspan="2" >
+			    						<p:messages id="msg-add-edit-demande" showDetail="true" showIcon="false" />
+			    					</p:column>
+			    				</p:row>
+			    				<p:row>
+			    					<p:column>
+			    						<p:outputLabel value="#{labels.objet} #{labels.a}#{labels.demande}" for="demande_objet"/>
+			    					</p:column>
+			    					<p:column>
+			    						<p:selectOneMenu
+			    							id="demande_objet"
+			    							value="#{rcDgListeDemandesController.demandeDgObjet}"
+			    							required="true"
+			    							converter="objetDemandeDgConverter"
+			    						>
+			    							<f:selectItem itemLabel="#{labels.select}" noSelectionOption="true"/>
+			    							<f:selectItems 
+			    								value="#{rcDgListeDemandesController.listObjetsDemandes}"
+			    								var="objetDemande"
+			    								itemLabel="#{objetDemande.libelleAr}" 
+			    								itemValue="#{objetDemande}"
+			    							/>
+			    						</p:selectOneMenu>
+			    					</p:column>
+			    				</p:row>
+			    				
+			    				<p:row>
+			    					<p:column colspan="2" style="text-align:center;">
+			    						<p:outputLabel value="#{labels.assure}" />
+			    					</p:column>
+			    				</p:row>
+			    				
+			    				<p:row>
+			    					<p:column colspan="2" style="text-align:center;">
+			    						<p:inputNumber 
+			    							value="#{rcDgListeDemandesController.demandeDgAssMat}" 
+			    							id="demande_ass_mat" 
+			    							label="#{labels['assure.matricule']}" 
+			    							size="6" 
+			    							decimalPlaces="0" 
+			    							thousandSeparator="" 
+			    							maxValue="99999999"
+			    							required="true"
+			    						>
+			    							<p:ajax
+			    								listener="#{rcDgListeDemandesController.refreshDemandeAssure()}"
+			    								process="demande_ass_mat, demande_ass_cle"
+			    								update="demande_ass_identite_ar"  
+			    							/>
+			    						</p:inputNumber>
+			    						<p:outputLabel value="-" style="margin:0 2px"/>
+			    						<p:inputNumber 
+			    							value="#{rcDgListeDemandesController.demandeDgAssCle}" 
+			    							id="demande_ass_cle" 
+			    							label="#{labels['assure.matricule']}" 
+			    							size="1" 
+			    							decimalPlaces="0" 
+			    							thousandSeparator="" 
+			    							maxValue="9"
+			    							required="true"
+			    						>
+			    							<p:ajax
+			    								listener="#{rcDgListeDemandesController.refreshDemandeAssure()}"
+			    								process="demande_ass_mat, demande_ass_cle"
+			    								update="demande_ass_identite_ar"  
+			    							/>
+			    						</p:inputNumber>
+			    					</p:column>
+			    				</p:row>
+			    				
+			    				<p:row>
+			    					<p:column colspan="2" style="text-align:center;">
+			    						<p:inputText value="#{rcDgListeDemandesController.demandeAssure.identiteAr}" id="demande_ass_identite_ar" disabled="true" size="50"/>
+			    					</p:column>
+			    				</p:row>
+			    				   				
+			    			</p:panelGrid>
+			    			
+			    			<p:panel id="panel-add-edit-demande-buttons" style="margin-top:15px;">			    				
+	    						<p:commandButton 
+	    							value="#{labels.save}"
+	    						>
+	    							<p:ajax
+	    								listener="#{rcDgListeDemandesController.saveDemande()}"
+		    							process="@this, demande_objet, demande_ass_mat, demande_ass_cle"
+	    								update="frm-liste-demandes-dg:dt-liste-demandes, frm-liste-demandes-dg:panel-add-edit-demande, frm-liste-demandes-dg:msg-add-edit-demande" 
+	    							/>
+	    						</p:commandButton>
+	    						<p:commandButton 
+	    							value="#{labels.cancel}"
+	    							onclick="PF('wAddEditDlgDemande').hide();"
+		    						update="frm-liste-demandes-dg:msg-add-edit-demande"
+	    						>	    						
+	    							<p:resetInput target="frm-liste-demandes-dg:panel-add-edit-demande"/>
+	    						</p:commandButton>
+		    				</p:panel>
+		    			</p:outputPanel>
+		    		
+		    		</p:dialog>
+		    		<!--%Boite de dialogue nouvelle demande%-->		
+		    		
+		    		
+		    		
+		    		
+		    		
+		    		
+		    		
+		    		<p:dialog
+		    			id="dlg-historique-demande"
+		    			widgetVar="wDlgHistoriqueDemande"
+		    			header="#{labels.situation} #{labels.a}#{labels.demande}"
+		    			style="max-width:600px;"
+		    		>
+		    			<p:outputPanel id="panel-dlg-historique-demande">
+		    				<p:dataTable
+		    					value="#{rcDgListeDemandesController.selectedDemandeHistorique}"
+		    					var="historique"
+		    				>
+		    					<p:column headerText="#{labels.a}#{labels.situation}">
+		    						<p:outputLabel value="#{historique.situation.libelleAr}" />
+		    					</p:column>
+		    					<p:column headerText="#{labels.date} #{labels.a}#{labels.situation}">
+		    						<p:outputLabel value="#{historique.dateSituation}" />
+		    					</p:column>
+		    					<p:column headerText="#{labels.a}#{labels.agent}">
+		    						<p:outputLabel value="#{historique.matriculeAgent}" />
+		    					</p:column>
+		    				</p:dataTable>
+		    			</p:outputPanel>
+		    		</p:dialog>    		
+	    			
+				</h:form>
+	    		
+	    	</ui:define> 
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

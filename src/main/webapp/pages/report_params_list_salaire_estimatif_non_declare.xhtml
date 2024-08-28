@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"   
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"    
+	xmlns:pe="http://primefaces.org/ui/extensions"
+>
+    <h:body>
+ 
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    	
+    		
+    		<ui:define name="pageTitle">#{labels.edition} - #{labels.salaireS_estimatifS_non_declareS}</ui:define>
+    		
+    	
+    		<ui:define name="content">
+    			
+    		
+    			<h:form id="frm-report-params">
+    			
+    				<p:outputPanel>
+
+						<p:panelGrid style="margin: 0 auto;">
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{labels.a}#{labels.trimestre}" for="trimestre"/>
+								</p:column>
+								<p:column>
+									<p:selectOneMenu
+										id="trimestre"
+										required="true"
+										value="#{reportSalairesEstimatifsNonDeclaresController.trimestre}"
+										label="#{labels.a}#{labels.trimestre}"
+									>
+										<f:selectItem itemLabel=" " noSelectionOption="true"/>
+			    						<f:selectItem itemLabel="1" itemValue="1"/>
+			    						<f:selectItem itemLabel="2" itemValue="2"/>
+			    						<f:selectItem itemLabel="3" itemValue="3"/>
+			    						<f:selectItem itemLabel="4" itemValue="4"/>
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{labels.a}#{labels.annee}" for="annee"/>
+								</p:column>
+								<p:column>
+									<p:inputNumber  
+						            	id="annee"
+					                	value="#{reportSalairesEstimatifsNonDeclaresController.annee}"
+					                	label="#{labels.a}#{labels.annee}"
+				    					size="3" 
+				    					decimalPlaces="0" 
+				    					thousandSeparator="" 
+				    					maxValue="9999" 
+				    					style="margin-left:5px;" 
+	   									required="true"
+				    				/>
+								</p:column>
+							</p:row>
+							<p:row style="text-align:center;">
+								<p:column colspan="2">
+									<p:commandButton 
+										value="#{labels.edition}"
+										icon="pi pi-print"
+									>
+										<p:ajax listener="#{reportSalairesEstimatifsNonDeclaresController.edit}" process="trimestre, annee, @this" update="reportDialog,msgs"/>
+									</p:commandButton>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						
+						<p:dialog id="reportDialog" widgetVar="wReportDialog" width="800" height="800" resizable="false">
+						<pe:documentViewer  url="#{reportSalairesEstimatifsNonDeclaresController.reportPdfFileUrl}" height="760" width="760" zoom="page-width"/> 
+						</p:dialog> 
+						
+					</p:outputPanel>
+
+				</h:form>
+	    		
+	    	</ui:define> 
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

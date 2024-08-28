@@ -1,0 +1,219 @@
+@CHARSET "ISO-8859-1";
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+
+html{
+	direction: rtl;
+}
+body{
+	font-family: Tahoma, Arial, 'Open Sans', sans-serif;
+	font-size:80%;
+	margin:0 auto;
+	background-color: #d1d1d1;
+}
+body *{
+	font-family: Tahoma !important;
+}
+.green{
+	color:#005B37 !important;
+}
+.greenLight{
+	background: #459e00 !important;
+}
+.pi{
+	font-family: 'primeicons' !important;
+}
+.pi-undo:before {
+    content: "\e9a8";
+}
+.panelTitle{
+	background:#459e00 !important;
+    text-align: center;
+    margin-bottom: 0;
+    color: white !important;
+    padding: 5px;
+}
+
+#page{
+	width: 95%;
+	margin: 0 auto;
+	max-width: /*1024*/1280px;
+}
+.highlight-1 {
+    background-color: #28a745ad !important;
+    background-image: none !important;
+    /*color: #ffffff !important;*/
+}
+.highlight-2 {
+    background-color: #ffc107! important;
+    background-image: none !important;
+    /*color: #ffffff !important;*/
+}
+.highlight-3 {
+    background-color: #dc3545ab !important;
+    background-image: none !important;
+    /*color: #ffffff !important;*/
+}
+
+/* header */
+#header{
+	float: left;
+	width: 100%;
+	background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    background-image: url("../resources/img/head.png");
+    background-size: 100% 100%;
+    border: 1px solid #dfd9c3;
+}
+#head-panel,#menu-panel{
+	width:100%;
+	float:left;
+}
+#head-panel #head-first{
+	float: right;
+}
+#head-panel #head-first img#drapeau{
+	float:right;
+	margin-left: 5px;
+}
+#head-panel #head-first img#logo{
+	padding: 0 45px;
+}
+#head-panel #head-first #tunisia{
+	float: right;
+}
+#head-panel #head-first #cnss{
+	clear: both;
+	font-weight: bold;
+}
+#head-panel #head-second{
+	margin-right: /*188px*/ 295px;
+    float: right;
+}
+#head-panel #head-second h1{
+	
+}
+
+
+#state-panel{
+	float: left;
+ 	width: 100%;
+}
+#state-panel #p-state-panel{
+	
+}
+#state-panel #p-state-panel #connected-user{
+	
+}
+#state-panel #p-state-panel #logout{
+	float: left;
+}
+#state-panel #p-state-panel-right #connected-user{
+	margin-right: 20px;
+}
+
+
+#menu-panel{
+	
+}
+
+#menu-panel .ui-menubar .ui-menuitem{
+	float:right;
+	/*border: 1px solid #459e00;*/
+    margin-left: 10px;
+}
+#menu-panel .ui-menubar .ui-menuitem a.ui-menuitem-link{
+	color: #459e00;
+	border: 1px solid #459e00;
+}
+#menu-panel .ui-menubar .ui-menuitem a.ui-menuitem-link:hover{
+	color: white;
+}
+#menu-panel .ui-menu .ui-menuitem-text{
+	float:right;
+}
+#menu-panel .ui-menu .ui-menu-parent .ui-menu-child{
+	right:0;
+}
+#menu-panel .ui-menubar>.ui-menu-list>.ui-menuitem>.ui-menuitem-link span.ui-icon-triangle-1-s{
+	margin-right: 5px;
+}
+/* /header */
+
+
+
+
+/*  Content */
+#content{
+	float: left;
+    background-color: #eff3f6;
+    width: 100%;
+    border-radius: 6px;
+}
+#content #p-content{
+	/*width: 985px;*/
+	padding: 3.5px;
+	min-height: 400px;
+}
+#content #p-content #p-content_content{
+	width:100%;
+	padding: 0;
+}
+
+/*  /content  */
+
+/*  footer  */
+#footer{
+	float: right;
+	width:100%;
+}
+/*  /footer */
+
+/*  Common css  */
+.ui-selectonemenu{
+	direction: ltr;
+}
+.ui-selectonemenu label.ui-selectonemenu-label, .ui-selectonemenu-panel .ui-selectonemenu-list-item{
+	text-align: center !important;	
+}
+.ui-dialog .ui-dialog-title{
+	float: none !important;
+}
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{
+	opacity: 0.45;
+}
+.ui-datepicker{
+	width: auto !important;
+}
+.datatable-ltr table{
+	direction: ltr;
+}
+/*  /Common css  */
+
+
+/* Datatble paginator right to left handle */
+.ui-icon-seek-end{
+	background-position: -80px -160px;
+}
+.ui-icon-seek-next{
+	background-position: -48px -160px;
+}
+.ui-icon-seek-first{
+	background-position: -64px -160px;	
+}
+.ui-icon-seek-prev{
+	background-position: -32px -160px;
+}
+/*%Datatble paginator right to left handle%*/
+
+
+
+
+/* Special styles browsers */
+@-moz-document url-prefix() {
+  .ui-widget .ui-widget {
+    font-size: 0.95em;
+  }
+}
+/*%Special styles browsers%*/

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+      
+      
+    <body>
+	    <ui:composition>
+	   		
+			  
+		    	<div id="head-panel">
+		    	
+		    		<div id="head-first">
+		    			<h:graphicImage library="img" name="drapeau.png" id="drapeau"/> 
+		    			<div id="tunisia" class="green">#{labels.tunisia}</div>  
+		    			<div id="cnss" class="green">#{labels.cnss}</div>
+		    			<h:graphicImage library="img" name="logo.png" id="logo"/> 
+		    		</div>
+		    		
+		    		<div id="head-second">
+		    			<h1 class="green">#{labels.applicationName}</h1>
+		    			<h2 class="green"><ui:insert name="pageTitle">#{labels.welcome}</ui:insert></h2> 
+		    		</div>
+		    		
+		    	</div>
+ 		
+ 			
+ 			
+	    </ui:composition>
+    </body>
+</html>

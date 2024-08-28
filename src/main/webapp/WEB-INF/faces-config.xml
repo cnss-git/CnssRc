@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+    <application>
+    
+    	<resource-bundle>
+			<base-name>tn.nat.cnss.reconstitutioncarriere.internalization.labels</base-name>
+           	<var>labels</var>
+       	</resource-bundle>
+       	
+       	<resource-bundle>
+			<base-name>tn.nat.cnss.reconstitutioncarriere.internalization.messages</base-name>
+           	<var>messages</var>
+       	</resource-bundle>
+       	
+       	<resource-bundle>
+			<base-name>tn.nat.cnss.reconstitutioncarriere.internalization.errors</base-name>
+           	<var>errors</var>
+       	</resource-bundle>
+       	
+       	<resource-bundle>
+			<base-name>tn.nat.cnss.reconstitutioncarriere.properties.application</base-name>
+           	<var>application</var>
+       	</resource-bundle>
+       	
+       	<message-bundle>tn.nat.cnss.reconstitutioncarriere.internalization.jsfMessages</message-bundle>
+       	
+    
+    	
+        <el-resolver>
+            org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>
+         
+        
+        
+    </application>
+</faces-config>

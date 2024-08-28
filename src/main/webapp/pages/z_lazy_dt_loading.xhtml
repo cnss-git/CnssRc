@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+ 
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    	
+    	
+    		
+    		<ui:define name="pageTitle">Liste de données : Chargement par page avec filtres personnalisés</ui:define>
+    	
+    		<ui:define name="content">
+    		
+    			
+    			<h:form id="frm-dg">
+    			
+    				<p:panel header="Filtres" style="direction:ltr;">    				
+    					<p:outputLabel value="Raison sociale like" />
+    					<p:inputText id="filter_raison_sociale" value="#{controller.filtreRaisonSociale}"/>
+    					
+    					<p:outputLabel value="Matricule >= " />
+    					<p:inputText id="filter_matricule" value="#{controller.filtreMatricule}"/>
+    					
+    					<p:commandButton value="filtrer" >
+    						<p:ajax event="click" listener="#{controller.refresh()}" update="dt_data" process="@this, filter_raison_sociale, filter_matricule" oncomplete="PF('dataTableWidgetVar').filter()"/>
+    					</p:commandButton>
+    				</p:panel>
+    			
+    			
+    				<p:dataTable
+    					value="#{controller.model}"
+    					paginator="true"
+    					rows="10"
+    					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     	rowsPerPageTemplate="5,10,15"
+                     	var="employeur"
+                     	rowKey="#{employeur.id.empMat}"
+                     	lazy="true"
+                     	id="dt_data"
+                     	widgetVar="dataTableWidgetVar"
+    				>
+    				
+    					<p:column headerText="Name">
+			                <h:outputText value="#{employeur.id.empMat}-#{employeur.id.empCle}"/>
+			            </p:column>
+    				
+    					<p:column headerText="Name">
+			                <h:outputText value="#{employeur.empRais}"/>
+			            </p:column>
+    				
+    				
+    				</p:dataTable>
+    				
+
+				</h:form>
+	    		
+	    	</ui:define> 
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

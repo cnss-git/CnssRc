@@ -1,0 +1,1 @@
+just to export the directory when maven->install

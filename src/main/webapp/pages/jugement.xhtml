@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+ 
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    	
+    		
+    		<ui:define name="pageTitle">#{labels.jugement}</ui:define>
+    		
+    	
+    		<ui:define name="content">
+    			
+    		
+    			<h:form id="frm-jugement">
+    			
+    				
+    				<h3 class="panelTitle" style="margin-top: 50px;">#{labels.assure}</h3> 
+    				<p:panel>
+	    				<p:outputLabel value="#{labels['assure.matricule']}" for="ass_mat" style="margin-left:5px"/>
+	    				<p:inputNumber value="#{rcJugementController.assMat}" id="ass_mat" label="#{labels['assure.matricule']}" size="10" decimalPlaces="0" thousandSeparator="" maxValue="99999999">
+	    					<p:ajax 
+	    						listener="#{rcJugementController.refreshAssure()}" 
+	    						process="ass_mat,ass_cle" 
+	    						update="ass_identite_ar, ass_identite_fr, emp_mat, emp_cle, emp_rais, btn_add_jugement, dt-jugement, msgs"
+    						/>
+	    				</p:inputNumber>
+	    				<p:outputLabel value="-" style="margin:0 2px"/>
+	    				<p:inputNumber value="#{rcJugementController.assCle}" id="ass_cle" size="1" decimalPlaces="0" thousandSeparator="" maxValue="9">
+	    					<p:ajax 
+	    						listener="#{rcJugementController.refreshAssure()}" 
+	    						process="ass_mat,ass_cle" 
+	    						update="ass_identite_ar, ass_identite_fr, emp_mat, emp_cle, emp_rais, btn_add_jugement, dt-jugement, msgs"
+    						/>
+	    				</p:inputNumber>
+	    				
+	    				<p:outputLabel value="#{labels['assure.identite']}" style="margin-right:40px;margin-left:5px;"/>
+	    				<p:inputText value="#{rcJugementController.assure.identiteAr}" id="ass_identite_ar" disabled="true" size="50" style="margin-left:10px;"/>
+	    				<p:inputText value="#{rcJugementController.assure.identiteFr}" id="ass_identite_fr" disabled="true" size="50" dir="ltr"/>
+	    			</p:panel>
+
+
+
+
+
+	    			<h3 class="panelTitle" style="margin-top: 30px;">#{labels.carriere}</h3> 
+	    			<p:panel>
+	    				<div style="text-align: center;">
+		    				<p:outputLabel value="#{labels.a}#{labels.employeur}" style="margin-left:5px;"/>
+		    				<p:inputNumber 
+		    					value="#{rcJugementController.empMat}" 
+		    					id="emp_mat" 
+		    					size="7" 
+		    					decimalPlaces="0" 
+		    					thousandSeparator="" 
+		    					maxValue="999999" 
+		    					style="margin-left:5px;" 
+		    					disabled="#{rcJugementController.assure == null}"
+		    				>
+		    					<p:ajax event="blur" listener="#{rcJugementController.refreshEmployeur()}" update="dt-jugement, btn_add_jugement, emp_rais, msgs"/>
+		    				</p:inputNumber>
+		    				
+		    				<p:inputNumber 
+		    					value="#{rcJugementController.empCle}" 
+		    					id="emp_cle" 
+		    					size="2" 
+		    					decimalPlaces="0" 
+		    					thousandSeparator="" 
+		    					maxValue="99" 
+		    					disabled="#{rcJugementController.assure == null}"
+		    				>
+		    					<p:ajax event="blur" listener="#{rcJugementController.refreshEmployeur()}" update="dt-jugement, btn_add_jugement, emp_rais, msgs"/>
+		    				</p:inputNumber>
+		    				
+		    				<p:inputText 
+		    					id="emp_rais" 
+		    					value="#{rcJugementController.employeur.empRaisAr != null ? rcJugementController.employeur.empRaisAr : rcJugementController.employeur.empRais}" 
+		    					disabled="true"
+		    					size="60"
+		    					style="margin-right:30px;"
+	    					/>
+	    				</div>
+	    				
+	    				<p:spacer width="100%" height="1px"/> 
+	    				
+	    				
+	    				<p:commandButton 
+	    					id="btn_add_jugement" icon="pi pi-plus" value="#{labels.add}" style="margin-bottom:15px;float: right;" 
+	    					disabled="#{rcJugementController.assure == null || rcJugementController.employeur == null}" 
+    					>
+	    					<p:ajax event="click" listener="#{rcJugementController.initNewJugement()}" update="dt-jugement" oncomplete="addRowAndEdit();" process="@this"/>
+	    				</p:commandButton>
+	    				
+	    				
+	    				<div>
+    						<p:outputLabel 
+    							value=""
+    							style="	
+    								float: right;
+   									height:27.44px;
+   									width: 27.44px;
+   									display:inline-block;
+   									margin-bottom: 25px;
+   									border-radius: 5px;
+   									margin-right: 20px;
+   									line-height: 27px;
+   									display: inline-block;
+    							" 
+	    						class="highlight-2" 
+    						/>
+    						<p:outputLabel 
+    							style="
+    								display: inline-block;
+								    height: 27.44px;
+								    margin-bottom: 25px;
+								    line-height: 2;
+								    margin-right: 3px;
+    							"
+    							value="#{labels.en_attente_d_exploitation}" 
+   							/>
+   						</div>
+	    				
+	    				
+	    				<script>
+	    					function addRowAndEdit() {
+    						   	// select the last row number
+    						   	var row = $("#frm-jugement\\:dt-jugement_data tr[data-ri]").last().attr('data-ri');
+    						   	console.log(row);
+    						   	if(row == null){
+	    						   	row = 0;
+	    						}else{
+		    						row = parseInt(row);
+		    					}
+    						   	console.log(row);
+    						   	$('#frm-jugement\\:dt-jugement\\:'+row+'\\:row_editor > .ui-row-editor-pencil span').trigger('click');
+    						};	    						
+    					</script>
+	    				
+	    				
+	    			
+		    			<p:dataTable
+		    				id="dt-jugement"
+		    				emptyMessage="#{messages.noRecordsFound}"
+		    				value="#{rcJugementController.jugementList}"
+		    				var="jugement"
+		    				editable="true"
+	    					widgetVar="dtJugement"
+	    					rowStyleClass="#{jugement.dateExploitation == null ? 'highlight-2' : null}"
+		                 	dir="rtl"
+		    			>
+		    			
+		    				<p:ajax event="rowEdit" listener="#{rcJugementController.onRowEdit}" oncomplete="if(!args.validationFailed) {$('#frm-jugement\\:emp_cle_input').trigger('blur')}" update="dt-jugement, msgs" />
+        					<p:ajax event="rowEditCancel" listener="#{rcJugementController.onRowCancel}" update="dt-jugement, msgs" />
+        					
+        					
+        					<p:column headerText="#{labels.a}#{labels.employeur}" >
+        						<p:outputLabel value="#{jugement.employeur.id.empMat} - #{jugement.employeur.id.empCle}" />
+        					</p:column>
+        					
+        					  
+        					<p:column headerText="#{labels.a}#{labels.trimestre}" >
+		    					<p:cellEditor>
+					                <f:facet name="output"><p:outputLabel value="#{jugement.trimestre}" /></f:facet>
+					                <f:facet name="input">
+						                <p:selectOneMenu 
+						                	value="#{jugement.trimestre}" 
+						                	required="true" 
+						                	label="#{labels.a}#{labels.trimestre}" 
+						                	style="padding-right:30px;"
+					                	>
+				    						<f:selectItem itemLabel="#{labels.select}" noSelectionOption="true"/>
+				    						<f:selectItem itemLabel="1" itemValue="1"/>
+				    						<f:selectItem itemLabel="2" itemValue="2"/>
+				    						<f:selectItem itemLabel="3" itemValue="3"/>
+				    						<f:selectItem itemLabel="4" itemValue="4"/>
+				    					</p:selectOneMenu>
+					                </f:facet>
+					            </p:cellEditor>
+	    					</p:column>
+						    
+						    
+						    <p:column headerText="#{labels.a}#{labels.annee}">
+					            <p:cellEditor>
+					                <f:facet name="output"><p:outputLabel value="#{jugement.annee}" /></f:facet>
+					                <f:facet name="input">
+						                <p:inputNumber 
+					    					value="#{jugement.annee}"
+					    					required="true"
+					    					size="5" 
+					    					decimalPlaces="0" 
+					    					thousandSeparator="" 
+					    					maxValue="9999"
+					    					label="#{labels.a}#{labels.annee}"
+					    				/>
+					                </f:facet>
+					            </p:cellEditor>
+	    					</p:column>
+	    					
+						    
+						    <p:column headerText="#{labels.a}#{labels['ds.salaire']}">
+						    	<p:cellEditor>
+							    	<f:facet name="output">
+								    	<h:outputText value="#{jugement.salaire}">
+								        	<f:convertNumber groupingUsed="true" maxFractionDigits="0"/>
+								        </h:outputText> 
+							    	</f:facet>
+							    	<f:facet name="input">
+								    	<p:inputNumber 
+								    		value="#{jugement.salaire}" 
+								    		size="13" 
+								    		decimalPlaces="0"  
+								    		symbolPosition="prefix" 
+								    		label="#{labels.a}#{labels['ds.salaire']}"
+								    		required="true"
+							    		/> 
+							    	</f:facet>
+						        </p:cellEditor>
+						    </p:column>
+						    
+						    
+						    <p:column style="width:32px" rendered="#{rcJugementController.employeur != null}">
+					            <p:rowEditor id="row_editor" rendered="#{jugement.dateExploitation == null}"/>
+					        </p:column>
+					        
+					        
+					        <p:column style="width:32px" rendered="#{rcJugementController.employeur != null}">
+					        	<p:commandButton icon="pi pi-trash" rendered="#{jugement.dateExploitation == null}">
+					        		<p:ajax event="click" oncomplete="PF('wDlgDelete').show();" listener="#{rcJugementController.prepareDelete(jugement)}" />
+					        	</p:commandButton>
+					        </p:column>
+					        
+					        
+					        <p:columnGroup type="footer">
+				                <p:row>
+				                    <p:column colspan="3" style="text-align:left" footerText="#{labels.a}#{labels.total}"/>
+				                    <p:column colspan="#{rcJugementController.employeur == null ? 1 : 3}">
+				                        <f:facet name="footer">
+				                            <p:outputLabel 
+									    		value="#{rcJugementController.totalSalaire}" 
+								    		>
+								    			<f:convertNumber  groupingUsed="true"  maxFractionDigits="0"/>
+								    		</p:outputLabel> 
+				                        </f:facet>
+				                    </p:column>
+				                </p:row>
+				            </p:columnGroup>
+					        
+					        
+						     
+		    			</p:dataTable>
+		    			
+		    			
+		    			
+		    			<p:dialog id="dlg-delete" widgetVar="wDlgDelete" modal="true" closable="false" header="#{messages.confirmDelete}">
+				    			<p:commandButton value="#{messages.yes}" oncomplete="PF('wDlgDelete').hide();">
+				    				<p:ajax event="click" listener="#{rcJugementController.processDelete()}" update="dt-jugement"/>
+				    			</p:commandButton>
+		    					<p:commandButton value="#{messages.no}" onclick="PF('wDlgDelete').hide();"/> 
+		    			</p:dialog>
+		    			
+		    			
+	    			</p:panel>
+				</h:form>
+	    		
+	    	</ui:define> 
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

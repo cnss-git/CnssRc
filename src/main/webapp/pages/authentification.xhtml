@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+>
+
+	<h:head>
+    	<ui:insert name="title"><title>Reconstitution carrière</title></ui:insert>
+		<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+		<!-- To support ajax actions based on jQuery -->
+		<h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+		<link rel="shortcut icon" href="../resources/img/logo.png" />
+		<style>
+			body{
+				background-color: white;
+			}
+	  		#p-login{
+	  			position: fixed;
+			    top: 60%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			    width: 350px;
+			    background: white;
+			    padding: 30px;
+			    border-color: #327e04;
+	  		}
+	  		#p-login_header{
+	  			text-align: center;
+	  			 background: white;
+	  			 border: none;
+	  		}
+	  		.ui-panel-title{
+	  			margin: 0 !important;
+	  			color:#005B37 !important;
+	  			font-size: 1.6em;
+	  		}
+	  		#p-login input{
+	  			border-radius: 0;
+			    border-top: none;
+			    -webkit-box-shadow: none;
+			    box-shadow: none;
+			    border-right: none;
+			    border-left: none;
+			    width: 100%;
+	  		}
+  		</style>
+    </h:head>
+  
+  	<body>
+  
+	  	<div id="head-panel" style="margin-top: 20px;">
+			    	
+	 		<div id="head-first" style="width:100%;text-align:center;">
+	 			<h:graphicImage library="img" name="drapeau.png" id="drapeau" style="float:none;margin:0"/> 
+	 			<div id="tunisia" class="green" style="float:none;margin:0">#{labels.tunisia}</div>  
+	 			<div id="cnss" class="green">#{labels.cnss}</div>
+	 			<!-- <h:graphicImage library="img" name="logo.png" id="logo"/> --> 
+	 		</div>
+			    		
+	   	</div>
+  	
+  	
+	    <p:panel id="p-login" header="تسجيل الدخول">
+	    	<h:form id="login" prependId="false"              onsubmit="document.getElementById('login').action='${request.contextPath}/perform_login';">
+	      		<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+	      		<h:panelGrid columns="1" cellpadding="5" style="width:100%;">
+	      			<!-- <p:outputLabel value="إسم المستخدم" for="username"/> -->
+		            <p:inputText style="direction: rtl;" id="username" name="username" required="true" label="Login"  placeholder="إسم المستخدم" value="#{loginController.username}" />
+		            <!--<p:outputLabel value="كلمة السر" for="password"/>-->
+		            <p:password  style="direction: rtl;" id="password" name="password" required="true" label="Mot de passe" placeholder="كلمة السر" value="#{loginController.password}"/>
+	                <p:commandButton style="width:100%;" value="تسجيل الدخول"  update="growl"  type="submit" ajax="false"/>
+	        	</h:panelGrid>
+	        </h:form>
+		</p:panel>
+		
+	</body>
+	
+</html>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+ 
+    	<ui:composition template="../templates/common/commonLayout.xhtml">
+    	
+    		
+    		
+    		<ui:define name="pageTitle">#{labels.maj_carriere}</ui:define> 
+    		
+    		
+    	
+    		<ui:define name="content">
+    			<style>
+	    		.ui-state-highlight .ui-icon {
+				    background-image: url(../resources/img/ui-icons.png);
+				}
+				#p-options div.ui-button{
+					background: #fafaf4 url(/reconstitutioncarriere/javax.faces.resource/images/ui-bg_highlight-hard_100_fafaf4_1x100.png.xhtml?ln=primefaces-south-street) 50% 50% repeat-x;
+					color: #459e00;
+				}
+				#p-options div.ui-button.ui-state-active{
+					background: #459e00 url(/reconstitutioncarriere/javax.faces.resource/images/ui-bg_highlight-hard_15_459e00_1x100.png.xhtml?ln=primefaces-south-street) 50% 50% repeat-x;
+					color: #ffffff;
+				}
+	    		</style>
+	    		
+	    		
+    			<f:event listener = "#{rcDgController.prenderViewChecks}" type="preRenderView" />
+    			
+    		
+    			<h:form id="frm-dg" onkeypress="if (event.keyCode == 13) { return false; }">
+	    			
+	    			<!-- Assuré -->
+	    			<h3 class="panelTitle" style="margin-top: 50px;">#{labels.assure}</h3> 
+	    			<p:panelGrid style="margin: 0 auto;margin-top:25px;">    					
+    					
+	    				<p:row>
+	    					<p:column>
+			    				<p:outputLabel value="#{labels['assure.matricule']}" for="ass_mat" />
+			    			</p:column>
+			    			
+			    			<p:column>
+			    				<p:inputNumber value="#{rcDgController.assMat}" id="ass_mat" label="#{labels['assure.matricule']}" size="6" decimalPlaces="0" thousandSeparator="" maxValue="99999999" disabled="true">
+			    					<p:ajax 
+			    						listener="#{rcDgController.refreshAssure()}" 
+			    						process="ass_mat,ass_cle" 
+			    						update="ass_identite_ar,ass_identite_fr,ass_dtnais,ass_dteffet,ass_iu,ass_regime,annee_salaire,btn_add_dg,dt-carriere,btn_add_dg,msgs"
+			    					/>
+			    				</p:inputNumber>
+			    				<p:outputLabel value="-" style="margin:0 2px"/>
+			    				<p:inputNumber value="#{rcDgController.assCle}" id="ass_cle" size="1" decimalPlaces="0" thousandSeparator="" maxValue="9" disabled="true">
+			    					<p:ajax 
+			    						listener="#{rcDgController.refreshAssure()}" 
+			    						process="ass_mat,ass_cle" 
+			    						update="ass_identite_ar,ass_identite_fr,ass_dtnais,ass_dteffet,ass_iu,ass_regime,annee_salaire,btn_add_dg,dt-carriere,btn_add_dg,msgs"
+			    						oncomplete="document.getElementById('frm-dg:annee_salaire_input').focus();"
+			    					/>
+			    				</p:inputNumber>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels['assure.identite']}" />
+		    				</p:column>		    				
+		    				<p:column colspan="2">
+		    					<p:inputText value="#{rcDgController.assure.identiteAr}" id="ass_identite_ar" disabled="true" size="50"/>
+		    				</p:column>	    				
+		    				<p:column colspan="2">
+		    					<p:inputText value="#{rcDgController.assure.identiteFr}" id="ass_identite_fr" disabled="true" size="50" dir="ltr"/>
+		    				</p:column>
+	    				</p:row>
+	    				
+	    				
+	    				<p:row>
+	    					<p:column>
+		    					<p:outputLabel value="#{labels.date_naissance}" />
+		    				</p:column>		    				
+		    				<p:column>
+			    				<p:inputText value="#{rcDgController.assure.benDtnais}" id="ass_dtnais" disabled="true" size="7">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.date_effet}" />
+		    				</p:column>		    				
+		    				<p:column>
+			    				<p:inputText value="#{rcDgController.assure.assDteff}" id="ass_dteffet" disabled="true" size="7"> 
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:inputText>
+		    				</p:column>
+		    				
+		    				<p:column style="text-align:end;">
+		    					<p:outputLabel value="#{labels.identifiant_unique}" style="margin-left:10px;"/>
+		    					<p:inputText value="#{rcDgController.assure.iu}" id="ass_iu" disabled="true" size="8" style="color:red; font-weight:bold;"/>
+		    				</p:column>
+		    				
+		    				<p:column>
+		    					<p:outputLabel value="#{labels.a}#{labels.regime}" style="margin-left: 10px;"/>
+		    					<p:inputText value="#{rcDgController.assure.regCod}" id="ass_regime" disabled="true" size="2"/>
+		    				</p:column>
+	    				</p:row>
+	    				
+   					</p:panelGrid>
+    				<!--%Assuré%--> 
+    				
+
+
+
+
+					<h3 class="panelTitle" style="margin-top: 30px;">#{labels.carriere}</h3> 
+	    			<p:panel>
+	    			
+	    				<!-- Année -->
+	    				<div style="text-align: center;">
+		    				<p:outputLabel value="#{labels.a}#{labels.annee}" style="margin-left:5px;"/>
+		    				<p:inputNumber 
+		    					label="#{labels.a}#{labels.annee}"
+		    					value="#{rcDgController.annee}" 
+		    					id="annee_salaire" 
+		    					size="6" 
+		    					decimalPlaces="0" 
+		    					thousandSeparator="" 
+		    					maxValue="9999" 
+		    					style="margin-left:5px;" 
+		    					disabled="#{rcDgController.assure == null}"
+		    				>
+		    					<p:ajax  listener="#{rcDgController.refreshCarriere()}" update="dt-carriere, btn_add_dg, msgs, btn-enregistrer, btn-annuler"/>
+		    				</p:inputNumber>
+	    				</div>
+	    				<!--%Année%-->
+	    				
+	    				<p:spacer width="100%" height="1px"/> 	  
+	    				
+	    				<!-- indicateurs couleurs état ligne -->  				
+	    				<div style="display: inline-block;">
+    						<p:outputLabel 
+    							value=""
+    							style="	
+    								float: right;
+   									height:27.44px;
+   									width: 27.44px;
+   									display:inline-block;
+   									margin-bottom: 25px;
+   									border-radius: 5px;
+   									margin-right: 20px;
+   									line-height: 27px;
+   									display: inline-block;
+    							" 
+	    						class="highlight-1" 
+    						/>
+    						<p:outputLabel 
+    							style="
+    								float: right;
+    								display: inline-block;
+								    height: 27.44px;
+								    margin-bottom: 25px;
+								    line-height: 2;
+								    margin-right: 3px;
+    							"
+    							value="#{labels.add} #{labels.en_attente_d_exploitation}" 
+   							/>
+   						
+    						<p:outputLabel 
+    							value=""
+    							style="	
+    								float: right;
+   									height:27.44px;
+   									width: 27.44px;
+   									display:inline-block;
+   									margin-bottom: 25px;
+   									border-radius: 5px;
+   									margin-right: 20px;
+   									line-height: 27px;
+   									display: inline-block;
+    							" 
+	    						class="highlight-2" 
+    						/>
+    						<p:outputLabel 
+    							style="
+    								float: right;
+    								display: inline-block;
+								    height: 27.44px;
+								    margin-bottom: 25px;
+								    line-height: 2;
+								    margin-right: 3px;
+    							"
+    							value="#{labels.edit} #{labels.en_attente_d_exploitation}" 
+   							/>
+   						
+    						<p:outputLabel 
+    							value=""
+    							style="	
+    								float: right;
+   									height:27.44px;
+   									width: 27.44px;
+   									display:inline-block;
+   									margin-bottom: 25px;
+   									border-radius: 5px;
+   									margin-right: 20px;
+   									line-height: 27px;
+   									display: inline-block;
+    							" 
+	    						class="highlight-3" 
+    						/>
+    						<p:outputLabel 
+    							style="
+    								float: right;
+    								display: inline-block;
+								    height: 27.44px;
+								    margin-bottom: 25px;
+								    line-height: 2;
+								    margin-right: 3px;
+    							"
+    							value="#{labels.delete} #{labels.en_attente_d_exploitation}" 
+   							/>
+   						</div>
+   						<!--%indicateurs couleurs état ligne%-->
+	    				
+	    				
+	    				<!-- Bouton ajouter -->
+	    				<p:commandButton 
+	    					id="btn_add_dg" 
+	    					icon="pi pi-plus" 
+	    					value="#{labels.add}" 
+	    					style="margin-bottom:15px;float: right;" 
+	    					disabled="#{rcDgController.assure==null || rcDgController.annee==null || rcDgController.modeAcces!='edit'}" 
+	    					onclick="$('#frm-dg\\:annee_salaire_input').trigger('blur')"
+		    				type="button"
+    					>
+	    					<p:ajax event="click" listener="#{rcDgController.initNewLigneCarriere()}" update="dt-carriere, btn_add_dg" oncomplete="addRowAndEdit();" process="@this"/>
+	    				</p:commandButton>
+	    				
+	    				<script>
+	    					function addRowAndEdit() {
+		    					//console.log('add clicked ....');
+    						   	// select the last row number
+    						   	var row = $("#frm-dg\\:dt-carriere_data tr[data-ri]").last().attr('data-ri');
+    						   	//console.log(row);
+    						   	if(row == null){
+	    						   	row = 0;
+	    						}else{
+		    						row = parseInt(row);
+		    					}
+    						   	//console.log(row);
+    						   	$('#frm-dg\\:dt-carriere\\:'+row+'\\:row_editor > .ui-row-editor-pencil span').trigger('click');
+    						   	$('#frm-dg\\:dt-carriere\\:'+row+'\\:employeur_input').focus();
+    						   	//document.getElementById('frm-dg\:dt-carriere\:'+row+'\:employeur_input').value = '3';
+    						   	document.getElementById('frm-dg\:dt-carriere\:'+row+'\:employeur_input').focus();
+    						   	setTimeout(function(){ $('#frm-dg\\:dt-carriere\\:'+row+'\\:employeur_input'). focus (); }, 500);
+    						   	//console.log('frm-dg\:dt-carriere\:'+row+'\:employeur_input');
+    						};	    						
+    					</script>
+    					<!--%Bouton ajouter%-->  	
+    					
+    					
+    					<!-- Mode affichage Carrière \ Modifcations  -->  
+    					<div id="p-options" style="direction:ltr; text-align:right; float:left;">
+	    					<p:selectOneButton value="#{rcDgController.listTrimestresToShow}">
+					            <f:selectItem itemLabel="#{labels.dg_afficher_modifications}" itemValue="2"/>
+					            <f:selectItem itemLabel="#{labels.dg_afficher_tout}" itemValue="1"/>
+					            <p:ajax  listener="#{rcDgController.refreshCarriere()}" process="@this" update="dt-carriere"/>
+					        </p:selectOneButton>
+	    				</div>
+	    				<!--%Mode affichage Carrière \ Modifcations%-->  
+	    				
+	    				
+	    				<!-- Carrière -->
+		    			<p:dataTable
+		    				id="dt-carriere"
+		    				emptyMessage="#{messages.noRecordsFound}"
+		    				value="#{rcDgController.filteredCarriereToProcess}"
+		    				var="salaire"
+		    				editable="true"
+	    					widgetVar="dtCarriere"	    					
+	    					rows="10"
+		                 	paginator="true"
+		                 	paginatorTemplate="{Exporters} {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                 	currentPageReportTemplate="{startRecord} - {endRecord} #{labels.from} {totalRecords}" 
+		                 	rowsPerPageTemplate="10,20,30"
+		                 	styleClass="datatable-ltr"
+		                 	rowStyleClass="#{salaire.styleInDatatable}"	
+		    			>
+		    			
+		    				<p:ajax event="rowEdit" listener="#{rcDgController.onRowEdit}" oncomplete="if(!args.validationFailed) {$('#frm-dg\\:annee_salaire_input').trigger('blur')}" update="dt-carriere, msgs" />
+        					<p:ajax event="rowEditCancel" listener="#{rcDgController.onRowCancel}" oncomplete="if(!args.validationFailed) {$('#frm-dg\\:annee_salaire_input').trigger('blur')}" update="dt-carriere, msgs" />
+        					<p:ajax event="rowEditInit" listener="#{rcDgController.saveOldState}" update="frm-dg:btn_add_dg"/>
+        					
+        					<p:column headerText="#{labels.date} #{labels.a}#{labels.saisie}" >
+        						<p:outputLabel value="#{salaire.dateSaisie}"  disabled="true">
+			    					<f:convertDateTime pattern="dd-MM-yyyy"/>
+			    				</p:outputLabel>
+        					</p:column>
+        					
+        					<p:column headerText="#{labels.a}#{labels.employeur}">
+						    	<p:cellEditor>
+						    	<f:facet name="output"><p:outputLabel value="#{salaire.empMat} - #{salaire.empCle}" /></f:facet>
+						        <f:facet name="input">
+						        	<p:outputLabel value="#{salaire.empMat} - #{salaire.empCle}" rendered="#{salaire.typeOperation!='I'}"/>
+						        	<p:inputNumber
+						        		size="5" 
+				                		decimalPlaces="0" 
+				                		thousandSeparator="" 
+				                		maxValue="999999" 
+				                		value="#{salaire.empMat}" 
+				                		label="#{labels.a}#{labels.employeur}" 
+				                		required="true"
+				                		rendered="#{salaire.typeOperation=='I'}"
+				                		style="margin-left:5px;"
+				                		id="employeur"
+						        	>
+						        		<p:ajax listener="#{rcDgController.refreshRow(salaire)}" update="type_salaire, emp_cle"/> 
+						        	</p:inputNumber>
+						        	<p:inputNumber
+						        		size="1" 
+				                		decimalPlaces="0" 
+				                		thousandSeparator="" 
+				                		maxValue="99" 
+				                		value="#{salaire.empCle}" 
+				                		label="#{labels.a}#{labels.employeur}" 
+				                		required="true"
+				                		rendered="#{salaire.typeOperation=='I'}"
+				                		id="emp_cle"				                		
+						        	>
+						        		<p:ajax listener="#{rcDgController.refreshRow(salaire)}" update="type_salaire"/>
+						        	</p:inputNumber>					
+						        </f:facet>
+						        </p:cellEditor> 
+						    </p:column>
+        					
+        					<p:column headerText="#{labels.a}#{labels.trimestre}" >
+		    					<p:cellEditor>
+					                <f:facet name="output"><p:outputLabel value="#{salaire.trimestre}" /></f:facet>
+					                <f:facet name="input">
+					                	<p:outputLabel value="#{salaire.trimestre}" rendered="#{salaire.typeOperation!='I'}"/>
+						                <p:selectOneMenu 
+						                	value="#{salaire.trimestre}" 
+						                	required="true" 
+						                	label="#{labels.a}#{labels.trimestre}" 
+						                	style="padding-right:30px;"
+						                	rendered="#{salaire.typeOperation=='I'}"
+						                	id="trimestre"
+					                	>
+				    						<f:selectItem itemLabel="#{labels.select}" noSelectionOption="true"/>
+				    						<f:selectItem itemLabel="1" itemValue="1"/>
+				    						<f:selectItem itemLabel="2" itemValue="2"/>
+				    						<f:selectItem itemLabel="3" itemValue="3"/>
+				    						<f:selectItem itemLabel="4" itemValue="4"/>
+				    					</p:selectOneMenu>
+					                </f:facet>
+					            </p:cellEditor>
+	    					</p:column>
+						    
+						    <p:column headerText="#{labels.a}#{labels.annee}">
+					            <p:outputLabel value="#{salaire.annee}" />
+	    					</p:column>
+						    
+						    <p:column headerText="#{labels['ds.type_salaire']}">
+    							<p:cellEditor>
+			    					<f:facet name="output"><p:outputLabel value="#{salaire.typeSalaire.codeTypeSalaire} - #{salaire.typeSalaire.libelleAr}"/></f:facet>
+			    					<f:facet name="input">
+			    						<p:outputLabel value="#{salaire.typeSalaire.codeTypeSalaire} - #{salaire.typeSalaire.libelleAr}" rendered="#{salaire.typeOperation!='I'}"/>
+				    					<p:selectOneMenu 
+				    						value="#{salaire.typeSalaire}" 
+				    						required="true" 
+				    						label="#{labels['ds.type_salaire']}" 
+				    						style="padding-right:30px;width:80%;"
+				    						id="type_salaire"
+				    						rendered="#{salaire.typeOperation=='I'}"
+				    						disabled="#{salaire.empMat==329912 and salaire.empCle==15}"
+				    						converter="typeSalaireConverter"
+			    						>
+				    						<f:selectItem itemLabel="#{labels.select}" noSelectionOption="true"/>
+				    						<f:selectItems 
+				    							value="#{rcDgController.listTypesSalaire}" 
+				    							var="typeSalaire"
+				    							itemLabel="#{typeSalaire.codeTypeSalaire} - #{typeSalaire.libelleAr != null ? typeSalaire.libelleAr : typeSalaire.libelleFr}"
+				    							itemValue="#{typeSalaire}"
+			    							/>
+				    					</p:selectOneMenu>
+			    					</f:facet>
+		    					</p:cellEditor>
+	    					</p:column>
+						    
+						    <p:column headerText="#{labels.a}#{labels['ds.salaire']}">
+						    	<p:cellEditor>
+							    	<f:facet name="output">
+							    		<!-- 
+								    	<h:outputText value="#{salaire.salaire}">
+								        	<f:convertNumber type="currency" groupingUsed="true" currencySymbol=" #{labels['ds.salaire_unit']}" maxFractionDigits="0" />
+								        </h:outputText>
+								        -->
+								        <p:inputNumber 
+								    		value="#{salaire.salaire}" 
+								    		size="13" decimalPlaces="0" 
+								    		symbolPosition="prefix" 
+								    		label="#{labels.a}#{labels['ds.salaire']}"
+								    		readonly="true"
+								    		inputStyle="background:none; border:none; box-shadow:none;direction:rtl;"
+							    		/>  
+							    	</f:facet>
+							    	<f:facet name="input">
+								    	<p:inputNumber 
+								    		value="#{salaire.salaire}" 
+								    		size="13" decimalPlaces="0"  
+								    		symbolPosition="prefix" 
+								    		label="#{labels.a}#{labels['ds.salaire']}"
+								    		required="true"
+								    		inputStyle="direction:rtl;"
+								    		id="ligne-carriere-salaire"
+							    		/> 
+							    	</f:facet>
+						        </p:cellEditor>
+						    </p:column>
+						    
+						    <p:column style="width:32px" >
+					            <p:rowEditor  id="row_editor" rendered="#{rcDgController.annee!=null and salaire.typeOperation!='D' and rcDgController.modeAcces=='edit'}"/>
+					        </p:column>
+					        
+					        <p:column style="width:32px" rendered="#{rcDgController.annee!=null and rcDgController.modeAcces=='edit'}"> 
+					        	<p:commandButton type="button" icon="pi pi-trash" rendered="#{salaire.typeOperation == null}">
+					        		<p:ajax event="click" oncomplete="PF('wDlgDelete').show();" listener="#{rcDgController.prepareDeleteCancelModifications(salaire)}" />
+					        	</p:commandButton>
+					        	
+					        	<p:commandButton type="button" icon="pi pi-replay" rendered="#{salaire.typeOperation != null}">
+					        		<p:ajax event="click" oncomplete="PF('wDlgCancel').show();" listener="#{rcDgController.prepareDeleteCancelModifications(salaire)}" />
+					        	</p:commandButton>
+					        </p:column>
+						     
+		    			</p:dataTable>
+		    			<!--%Carrière%-->
+		    			
+		    			
+		    			
+		    			
+		    			<!-- Boutons enregistrer/annuler/valider -->
+		    			<p:panel id="panel-edit-cancel-maj-carriere" style="display:flex;justify-content:center;margin-top:10px;">
+		    				<p:commandButton 
+		    					id="btn-enregistrer" 
+		    					icon="pi pi-save" 
+		    					value="#{labels.save}"
+		    					disabled="#{rcDgController.annee!=null || rcDgController.modeAcces!='edit'}"
+		    				> 
+		    					<p:ajax event="click" process="@this" listener="#{rcDgController.saveDg()}" update="dt-carriere, msgs, btn_add_dg, btn-enregistrer, btn-annuler, btn-valider"/>
+		    				</p:commandButton>
+		    				<p:commandButton 
+		    					id="btn-annuler" 
+		    					icon="pi pi-replay" 
+		    					value="#{labels.cancel}" 
+		    					disabled="#{rcDgController.annee!=null || rcDgController.modeAcces!='edit'}"
+		    				>
+		    					<p:ajax listener="#{rcDgController.cancelDg()}" update="dt-carriere, msgs" />
+		    				</p:commandButton>
+		    				<p:commandButton
+		    					id="btn-valider"
+		    					icon="pi pi-check"
+		    					value="#{labels.validate}"	
+		    					disabled="#{rcDgController.annee!=null || rcDgController.modeAcces!='validate'}"	    					
+		    				>
+		    					<p:ajax event="click" listener="#{rcDgController.validerDemandeDg()}" update="dt-carriere, msgs, btn_add_dg, btn-enregistrer, btn-annuler, btn-valider"/>
+		    				</p:commandButton>
+		    			</p:panel>		    			
+		    			<!-- Boutons enregistrer/annuler/valider -->
+		    			
+		    			
+		    			
+		    			
+		    			
+		    			<!-- Boite de dialogue confirmation suppression -->
+		    			<p:dialog id="dlg-delete" widgetVar="wDlgDelete" modal="true" closable="false" header="#{messages.confirmDelete}">
+				    			<p:commandButton value="#{messages.yes}" oncomplete="PF('wDlgDelete').hide();"> 
+				    				<p:ajax event="click" listener="#{rcDgController.processLigneForDelete()}" update="dt-carriere annee_salaire" oncomplete="$('#frm-dg\\:annee_salaire_input').trigger('blur')"/>
+				    			</p:commandButton>
+		    					<p:commandButton value="#{messages.no}" onclick="PF('wDlgDelete').hide();"/> 
+		    			</p:dialog>
+		    			<!--%Boite de dialogue confirmation suppression%-->
+		    			
+		    			
+		    			
+		    			
+		    			<!-- Boite de dialogue confirmation annulation -->
+		    			<p:dialog id="dlg-cancel" widgetVar="wDlgCancel" modal="true" closable="false" header="#{messages.confirmCancel}">
+				    			<p:commandButton value="#{messages.yes}" oncomplete="PF('wDlgCancel').hide();">
+				    				<p:ajax event="click" listener="#{rcDgController.cancelLigne}" update="dt-carriere annee_salaire" oncomplete="$('#frm-dg\\:annee_salaire_input').trigger('blur')"/>
+				    			</p:commandButton>
+		    					<p:commandButton value="#{messages.no}" onclick="PF('wDlgCancel').hide();"/> 
+		    			</p:dialog>
+		    			<!--%Boite de dialogue confirmation annulation%-->
+		    			
+		    			
+	    			</p:panel>
+				</h:form>
+	    		
+	    	</ui:define> 
+    		
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

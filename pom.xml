@@ -1,0 +1,274 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>tn.nat.cnss</groupId>
+  <artifactId>reconstitutioncarriere</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  
+  
+  <properties>
+
+		<!-- Generic properties -->
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
+		<!-- Spring -->
+		<spring-framework.version>5.2.0.RELEASE</spring-framework.version>
+		<springframework.security.version>5.2.0.RELEASE</springframework.security.version>
+		<springframework.data.version>2.2.0.RELEASE</springframework.data.version>
+		
+		<!-- Hibernate / JPA -->
+		<hibernate.version>5.2.10.Final</hibernate.version>
+		
+		<!-- JSF Version -->
+		<jsf.version>2.2.15</jsf.version>
+		
+		<!-- Primefaces -->
+		<primefaces.framework.version>7.0</primefaces.framework.version>
+		<org.primefaces.themes.version>1.0.10</org.primefaces.themes.version>
+		
+		<!-- Servlets -->
+		<servlets.version>4.0.0</servlets.version>
+		
+		<!-- Jackson -->
+		<com.fasterxml.jackson.version>2.10.1</com.fasterxml.jackson.version>
+		
+		<!-- Jasper -->
+		<jasper.version>6.10.0</jasper.version>
+		
+	</properties>
+	
+	
+	
+	<dependencies>
+	
+        <!-- Spring -->
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-framework.version}</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring-framework.version}</version>  
+        </dependency>
+        <dependency>
+	        <groupId>org.springframework.data</groupId>
+	        <artifactId>spring-data-jpa</artifactId>
+	        <version>${springframework.data.version}</version>
+	    </dependency>
+	    
+	    
+	    <!-- Spring security -->
+	    <dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>${springframework.security.version}</version>
+		</dependency>
+		<dependency>  
+	        <groupId>org.springframework.security</groupId>  
+	        <artifactId>spring-security-config</artifactId>  
+	        <version>${springframework.security.version}</version>  
+		</dependency>
+        
+		
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		
+		
+		<!-- JSF -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>${jsf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>${jsf.version}</version>
+		</dependency>
+		
+		
+		<!-- Primefaces -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>south-street</artifactId>
+            <version>${org.primefaces.themes.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.primefaces.extensions/primefaces-extensions -->
+		<dependency>
+		    <groupId>org.primefaces.extensions</groupId>
+		    <artifactId>primefaces-extensions</artifactId>
+		    <version>7.0</version> 
+		</dependency>
+        
+        
+        <!-- Servlets -->
+		<dependency>
+    		<groupId>javax.servlet</groupId>
+    		<artifactId>javax.servlet-api</artifactId>
+			<version>${servlets.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		
+		<!-- Oracle -->
+		<dependency>
+		    <groupId>com.oracle</groupId>
+		    <artifactId>ojdbc8</artifactId>
+		    <version>12.2.0.1</version>
+		</dependency>
+		<!-- HikariCP -->
+		<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		    <version>3.4.5</version>
+		</dependency>
+		<!-- Tomcat Jdbc -->
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-jdbc</artifactId>
+		    <version>9.0.60</version>
+		</dependency>
+		
+        
+        
+        <!-- Jackson -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${com.fasterxml.jackson.version}</version>
+		</dependency>		
+		<dependency>
+		    <groupId>org.codehaus.jackson</groupId>
+		    <artifactId>jackson-mapper-asl</artifactId>
+		    <version>1.9.13</version>
+		</dependency>
+
+
+		<!-- Log4j Logging -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-1.2-api</artifactId>
+		    <version>2.17.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web -->
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-web</artifactId>
+		    <version>2.17.2</version>
+		</dependency>
+		
+		
+		
+		
+		<!-- Security -->
+		<dependency> 
+            <groupId>local.cnss</groupId>
+            <artifactId>security</artifactId>
+            <version>1.0RC</version>
+        </dependency>
+        
+        
+        <!-- Jasper -->
+        <dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports</artifactId>
+		    <version>${jasper.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>net.sf.jasperreports</groupId>
+		    <artifactId>jasperreports-functions</artifactId>
+		    <version>${jasper.version}</version>
+		</dependency>
+		<!--%Jasper%-->
+        
+        
+ 
+    </dependencies>
+    
+    
+    
+    <profiles>
+
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>               
+            </properties>
+        </profile>
+
+    </profiles>
+    
+    
+    
+    
+    <repositories>
+        <repository>
+            <id>primefaces-sam-theme-repo</id>
+            <name>primefaces-sam-theme-repo</name>
+            <url>http://repository.primefaces.org/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    
+    
+  
+  
+  
+	<build>
+		<resources>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	            <filtering>true</filtering>	  
+	        </resource>
+    	</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+	           <groupId>org.apache.maven.plugins</groupId>
+	           <artifactId>maven-war-plugin</artifactId>
+	           <version>3.0.0</version>
+	           <configuration>
+	               <failOnMissingWebXml>false</failOnMissingWebXml>
+	           </configuration>
+	       </plugin>
+		</plugins>
+		<finalName>${project.artifactId}</finalName>
+	</build>
+  
+</project>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListeTransfertsMatricules" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9db3f08-9994-4b24-9ef6-f39080d4b8b3">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="reconstitution cde carriere"/>
+	<parameter name="Date_Deb_Param" class="java.sql.Date"/>
+	<parameter name="Date_Fin_Param" class="java.sql.Date"/>
+	<queryString language="SQL">
+		<![CDATA[select t.ass_mat_source||'-'||t.ass_cle_source MAT_Source, b.ben_nom||' '||b.ben_prenom Identite, t.ass_mat_destination||'-'||t.ass_cle_destination MAT_Destination, t.rctr_dt_saisie date_saisie 
+from rc_transfert_matricule t, beneficiaire b 
+where t.ass_mat_source=b.ass_mat 
+and t.ass_cle_source=b.ass_cle 
+and b.ben_type=1
+and trunc(t.rctr_dt_saisie) BETWEEN trunc($P{Date_Deb_Param}) and  trunc($P{Date_Fin_Param}) ]]>
+	</queryString>
+	<field name="MAT_SOURCE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MAT_SOURCE"/>
+		<property name="com.jaspersoft.studio.field.label" value="MAT_SOURCE"/>
+	</field>
+	<field name="IDENTITE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="IDENTITE"/>
+		<property name="com.jaspersoft.studio.field.label" value="IDENTITE"/>
+	</field>
+	<field name="MAT_DESTINATION" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MAT_DESTINATION"/>
+		<property name="com.jaspersoft.studio.field.label" value="MAT_DESTINATION"/>
+	</field>
+	<field name="DATE_SAISIE" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="DATE_SAISIE"/>
+		<property name="com.jaspersoft.studio.field.label" value="DATE_SAISIE"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="105" y="43" width="354" height="30" uuid="696a585b-934c-4edf-994e-1c3579eb5e9b"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liste des transferts entre deux matricules]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="1" y="12" width="100" height="30" uuid="69d27e3f-93c7-4131-97c0-59c552259817"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="141" height="30" uuid="c38b59ef-bf21-4737-bebd-228417ec6d78">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5185be7-ea66-4c1c-bde6-70ea0c5710fa"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAT_SOURCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="30" width="138" height="30" uuid="ecf353c7-888a-4623-84f5-6cc7dac4af5c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a7d6497e-d91a-4ab5-96bb-1c73b593be97"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IDENTITE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="30" width="138" height="30" uuid="1d12873d-daa3-4654-bd09-592f2031a98b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab7cff26-2733-454c-98c5-3208db96f0d5"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAT_DESTINATION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="30" width="138" height="30" uuid="e26bfe1d-31f0-4365-9373-a834e7fd3413">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b5dcab2b-b5f1-4379-90e9-146fda0aff26"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE_SAISIE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="141" height="30" uuid="6ec23e6f-1c43-46fe-a0de-35b57b5400f7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5185be7-ea66-4c1c-bde6-70ea0c5710fa"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MAT_SOURCE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="0" width="138" height="30" uuid="47e77e04-d227-4420-9542-f525074216fd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a7d6497e-d91a-4ab5-96bb-1c73b593be97"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{IDENTITE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="138" height="30" uuid="959dea8f-bce1-4f62-827d-913e04caca43">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab7cff26-2733-454c-98c5-3208db96f0d5"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MAT_DESTINATION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="417" y="0" width="138" height="30" uuid="88f1b60a-f1ec-4ff0-948d-ad5485729280">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b5dcab2b-b5f1-4379-90e9-146fda0aff26"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DATE_SAISIE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement x="230" y="22" width="100" height="30" uuid="99250bad-a999-405f-99b3-e4c22472ca7f"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

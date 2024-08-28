@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <body>
+	    <ui:composition>
+ 			
+			<p:menubar>
+				<!--  
+			    <p:submenu label="#{labels.parameters}">
+			    	<p:menuitem value="#{labels.users}" 	outcome="welcome" />	
+			    	<p:menuitem value="#{labels.welcome}" 	outcome="welcome" /> 	    			       
+			    </p:submenu>
+			    -->
+			    <p:menuitem value="#{labels.welcome}" 	outcome="welcome" /> 	  
+			    <p:menuitem value="#{labels.maj_carriere}" 	outcome="dg_liste_demandes" /> 
+			    <p:menuitem value="#{labels.salaire_estimatif_du_trimestre_en_cours} (#{labels.demande} #{labels.retraite})" 	outcome="salaire_estimatif_demande_retraite" /> 
+			    <p:menuitem value="#{labels.transfert} (#{labels.cnrps})" 	outcome="transfert_cnrps" />
+			    <p:menuitem value="#{labels.transfert} #{labels['assure.matricule']}" 	outcome="transfert_matricule" />
+			    <p:menuitem value="#{labels.rachat}" outcome="rachat"/>
+			    <p:menuitem value="#{labels.jugement}" outcome="jugement"/> 
+			    <p:submenu label="#{labels.edition}">
+			    	<p:menuitem value="#{labels.maj_carriere}" 	outcome="report_params_list_dg_datdeb_datfin" />	    
+			    	<p:menuitem value="#{labels.salaireS_estimatifS_non_declareS}" 	outcome="report_params_list_salaire_estimatif_non_declare" />
+			    	<p:menuitem value="#{labels.salaireS_estimatifS_declareS}" 	outcome="report_params_list_salaire_estimatif_declare" />	    			  	   
+			    	<p:menuitem value="#{labels.transfert} (#{labels.cnrps})" 	outcome="report_params_list_transfert_cnrps_datdeb_datfin" />	
+			    	<p:menuitem value="#{labels.transfert} #{labels['assure.matricule']}" 	outcome="report_params_list_transfert_matricule_datdeb_datfin" />     
+			    	<p:menuitem value="#{labels.jugement}" 	outcome="report_params_list_jugement_datesaisie" />    			       
+			    </p:submenu>
+		    </p:menubar>
+		   
+		    <!-- <p:messages id="msgs" showDetail="true" closable="true" /> -->
+   			<!-- <p:growl id="msgs" showDetail="true" sticky="true" /> -->
+   			
+   			
+		  	<!-- Ajax status waiting -->   					
+		    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" onerror="PF('statusDialog').hide()"/>
+	
+		    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		        <div class="p-text-center">
+		            <i class="pi pi-spin pi-spinner loading-icon" aria-hidden="true"></i>
+		        </div>
+		    </p:dialog>
+		    <!--%Ajax status waiting%-->
+		  		
+	  		
+		    
+	    </ui:composition>
+    </body>
+</html>
